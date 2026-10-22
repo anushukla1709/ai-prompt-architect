@@ -5,234 +5,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101426">
+<meta name="description" content="Create professional AI prompts for videos, images, social media, blogs and business.">
 <title>AI Professional Prompt Architect</title>
 <style>
+:root{--bg:#0b1020;--panel:#151d32;--text:#f5f7ff;--muted:#aab5ce;--accent:#8b5cf6;--border:#303b55}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#101827;color:#f8fafc}
-header{text-align:center;padding:28px 16px;background:linear-gradient(135deg,#172554,#6d28d9)}
-header h1{font-size:27px;margin:0 0 10px}
-header p{margin:0;color:#e0e7ff;line-height:1.6}
-main{max-width:760px;margin:22px auto;padding:0 14px}
-.card{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;margin-bottom:18px}
-h2{font-size:20px;margin:0 0 12px}
-label{display:block;margin:16px 0 8px;font-weight:bold}
-select,input,textarea{width:100%;padding:13px;border-radius:9px;border:1px solid #475569;background:#0f172a;color:white;font-size:16px}
-textarea{min-height:100px;resize:vertical}
-button{border:0;border-radius:9px;padding:13px 16px;font-weight:bold;font-size:15px;cursor:pointer}
-.primary{background:#7c3aed;color:white;width:100%;margin-top:18px}
-.secondary{background:#334155;color:white;margin:5px 3px 0 0}
-#output{min-height:260px}
-small{color:#cbd5e1;font-size:13px;line-height:1.6}
-.status{color:#86efac;min-height:20px;margin-top:10px}
-footer{text-align:center;color:#94a3b8;padding:20px;font-size:13px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 5%;border-bottom:1px solid var(--border);background:#101629;position:sticky;top:0;z-index:5}
+.logo{font-weight:800;font-size:18px}
+.logo span{color:#a78bfa}
+.navlink{color:#d7dcef;font-size:14px}
+.hero{text-align:center;padding:65px 18px 55px;background:radial-gradient(ellipse at top,#38256f 0%,#171b3b 48%,#0b1020 100%)}
+.tag{display:inline-block;padding:6px 13px;border:1px solid #6e55a8;border-radius:30px;color:#ddd0ff;font-size:12px}
+h1{font-size:clamp(32px,7vw,54px);line-height:1.12;margin:20px auto;max-width:800px}
+.hero p{color:#c4cbe0;max-width:620px;margin:0 auto 25px}
+.btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;background:linear-gradient(120deg,#7c3aed,#4f46e5);color:white;font-weight:700;cursor:pointer}
+.btn.secondary{background:#26314b;border:1px solid #43506e}
+.section{max-width:1000px;margin:auto;padding:45px 18px}
+.section-title{text-align:center;margin-bottom:25px}
+.section-title h2{font-size:28px;margin-bottom:5px}
+.section-title p,.muted{color:var(--muted)}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.tool{background:var(--panel);border:1px solid var(--border);padding:19px 14px;border-radius:15px;cursor:pointer;text-align:left;color:var(--text)}
+.tool:hover{border-color:#9b82ff;transform:translateY(-2px)}
+.tool .emoji{font-size:27px}
+.tool strong{display:block;margin:7px 0}
+.tool small{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--border);padding:22px;border-radius:18px}
+label{display:block;font-weight:700;margin:15px 0 7px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #45516e;border-radius:10px;background:#0e1528;color:white}
+textarea{min-height:95px;resize:vertical}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#output{min-height:210px;margin-top:18px;white-space:pre-wrap;overflow-wrap:anywhere}
+.notice{color:#f3d7a2;font-size:13px;margin-top:12px}
+footer{text-align:center;padding:28px 15px;color:var(--muted);border-top:1px solid var(--border)}
+@media(max-width:480px){nav{padding:13px 15px}.hero{padding-top:48px}.section{padding:32px 14px}.panel{padding:16px}.navlink{font-size:12px}}
 </style>
 </head>
 <body>
-<header>
-<h1>AI Professional Prompt Architect</h1>
-<p>Create powerful, detailed AI prompts for your next project.</p>
+<nav>
+  <a class="logo" href="#home">AI <span>Prompt Architect</span></a>
+  <a class="navlink" href="#tools">Explore Tools ↓</a>
+</nav>
+
+<header class="hero" id="home">
+  <span class="tag">YOUR CREATIVE AI WORKSPACE</span>
+  <h1>Turn Your Ideas Into <span style="color:#b9a2ff">Powerful AI Prompts</span></h1>
+  <p>Create detailed prompts for viral videos, cinematic scenes, images, blogs and business content—all in one place.</p>
+  <a class="btn" href="#generator">Create Your Prompt →</a>
 </header>
 
-<main>
-<section class="card">
-<h2>Build Your Professional Prompt</h2>
-
-<label for="platform">1. Select Platform / Project</label>
-<select id="platform">
-<option>YouTube Shorts</option>
-<option>Facebook Reels</option>
-<option>Instagram Reels</option>
-<option>Cinematic AI Video</option>
-<option>Fitness Content</option>
-<option>Product Advertisement</option>
-<option>Blog Article</option>
-<option>Image Generation</option>
-<option>Business Marketing</option>
-<option>Custom Project</option>
-</select>
-
-<label for="goal">2. Topic or Main Goal *</label>
-<input id="goal" placeholder="Example: A giant tsunami hits a city">
-
-<label for="audience">3. Target Audience</label>
-<input id="audience" placeholder="Example: US and UK viewers, beginners">
-
-<label for="language">4. Output Language</label>
-<select id="language">
-<option>English</option>
-<option>Hindi</option>
-<option>Hinglish</option>
-<option>Spanish</option>
-<option>French</option>
-<option>Japanese</option>
-<option>Other / As appropriate</option>
-</select>
-
-<label for="duration">5. Duration / Length</label>
-<select id="duration">
-<option>10 seconds</option>
-<option>15 seconds</option>
-<option>20 seconds</option>
-<option>30 seconds</option>
-<option>60 seconds</option>
-<option>3–5 minutes</option>
-<option>Long-form content</option>
-<option>Not applicable</option>
-</select>
-
-<label for="style">6. Style / Quality</label>
-<select id="style">
-<option>Professional and engaging</option>
-<option>Hollywood cinematic realism</option>
-<option>Viral short-form storytelling</option>
-<option>Funny and entertaining</option>
-<option>Educational and informative</option>
-<option>Ultra-realistic visuals</option>
-<option>Luxury commercial</option>
-<option>3D animated</option>
-<option>Emotional storytelling</option>
-</select>
-
-<label for="details">7. Extra Instructions</label>
-<textarea id="details" placeholder="Add character details, camera angles, scene continuity, voice, music, restrictions or anything else..."></textarea>
-
-<button class="primary" onclick="buildPrompt()">✨ Generate Professional Prompt</button>
-<p class="status" id="status" role="status"></p>
+<section class="section" id="tools">
+  <div class="section-title">
+    <h2>Explore AI Tools</h2>
+    <p>Choose your project to start building a professional prompt.</p>
+  </div>
+  <div class="tools">
+    <button class="tool" data-tool="YouTube Shorts" type="button"><span class="emoji">🎬</span><strong>YouTube Shorts</strong><small>Hooks, scripts and scenes</small></button>
+    <button class="tool" data-tool="Facebook Reels" type="button"><span class="emoji">📱</span><strong>Facebook Reels</strong><small>Short-form video ideas</small></button>
+    <button class="tool" data-tool="Cinematic AI Video" type="button"><span class="emoji">🎥</span><strong>Cinematic Video</strong><small>Film-style scene prompts</small></button>
+    <button class="tool" data-tool="Image Generation" type="button"><span class="emoji">🖼️</span><strong>Image Prompts</strong><small>Detailed visual concepts</small></button>
+    <button class="tool" data-tool="Blog Article" type="button"><span class="emoji">✍️</span><strong>Blog Writer</strong><small>SEO-focused article prompts</small></button>
+    <button class="tool" data-tool="Product Advertisement" type="button"><span class="emoji">🛍️</span><strong>Product Ads</strong><small>Creative marketing ideas</small></button>
+    <button class="tool" data-tool="Fitness Content" type="button"><span class="emoji">💪</span><strong>Fitness Content</strong><small>Workout and wellness content</small></button>
+    <button class="tool" data-tool="Business Marketing" type="button"><span class="emoji">🚀</span><strong>Business Marketing</strong><small>Campaigns and growth ideas</small></button>
+  </div>
 </section>
 
-<section class="card">
-<h2>Your Generated Prompt</h2>
-<textarea id="output" placeholder="Your professional prompt will appear here..." aria-label="Generated prompt"></textarea>
-<button class="secondary" onclick="copyPrompt()">📋 Copy Prompt</button>
-<button class="secondary" onclick="downloadPrompt()">⬇ Download TXT</button>
-<button class="secondary" onclick="clearForm()">↻ Reset</button>
-<p><small>This tool creates prompts using your inputs. It does not call an AI model or generate videos/images itself.</small></p>
+<section class="section" id="generator">
+  <div class="section-title">
+    <h2>Build Your Professional Prompt</h2>
+    <p>Describe your idea. Customize the settings. Generate your prompt.</p>
+  </div>
+  <div class="panel">
+    <form id="promptForm">
+      <label for="platform">1. Platform / Project</label>
+      <select id="platform">
+        <option>YouTube Shorts</option><option>Facebook Reels</option>
+        <option>Instagram Reels</option><option>Cinematic AI Video</option>
+        <option>Fitness Content</option><option>Product Advertisement</option>
+        <option>Blog Article</option><option>Image Generation</option>
+        <option>Business Marketing</option><option>Custom Project</option>
+      </select>
+      <label for="goal">2. Topic or Main Goal *</label>
+      <textarea id="goal" required placeholder="Example: A giant tsunami hits a modern coastal city"></textarea>
+      <div class="grid">
+        <div>
+          <label for="audience">3. Target Audience</label>
+          <input id="audience" placeholder="Example: US and UK viewers">
+        </div>
+        <div>
+          <label for="language">4. Output Language</label>
+          <select id="language"><option>English</option><option>Hindi</option><option>Hinglish</option><option>Spanish</option><option>French</option><option>Japanese</option></select>
+        </div>
+        <div>
+          <label for="duration">5. Duration / Length</label>
+          <select id="duration"><option>10 seconds</option><option>15 seconds</option><option>20 seconds</option><option>30 seconds</option><option>60 seconds</option><option>3–5 minutes</option><option>Long-form content</option><option>Not applicable</option></select>
+        </div>
+        <div>
+          <label for="style">6. Style / Quality</label>
+          <select id="style"><option>Professional and engaging</option><option>Hollywood cinematic realism</option><option>Funny and entertaining</option><option>Emotional storytelling</option><option>Documentary style</option><option>Educational and clear</option><option>Luxury commercial</option><option>Photorealistic</option></select>
+        </div>
+      </div>
+      <label for="details">7. Extra Instructions (Optional)</label>
+      <textarea id="details" placeholder="Character consistency, scene matching, camera movement, hook, sound design, call to action..."></textarea>
+      <div class="actions">
+        <button class="btn" type="submit">✨ Generate Professional Prompt</button>
+        <button class="btn secondary" type="reset">Reset Form</button>
+      </div>
+    </form>
+    <div id="resultArea" hidden>
+      <h3>Your Generated Prompt</h3>
+      <div class="panel" id="output" aria-live="polite"></div>
+      <div class="actions">
+        <button class="btn" type="button" id="copyBtn">Copy Prompt</button>
+        <button class="btn secondary" type="button" id="downloadBtn">Download TXT</button>
+      </div>
+      <p class="notice">This free tool creates text prompts. Generating actual AI images or videos requires a separate compatible service.</p>
+    </div>
+    <p class="muted" id="status" aria-live="polite"></p>
+  </div>
 </section>
-</main>
 
-<footer>AI Professional Prompt Architect · Version 1.0</footer>
+<section class="section">
+  <div class="section-title">
+    <h2>Simple. Creative. Powerful.</h2>
+    <p>Organize your ideas and turn them into clear instructions for your preferred AI tool.</p>
+  </div>
+  <div class="tools">
+    <div class="tool"><span class="emoji">⚡</span><strong>Fast workflow</strong><small>Start with a topic and customize your result.</small></div>
+    <div class="tool"><span class="emoji">🎯</span><strong>Clear instructions</strong><small>Specify audience, style, language and length.</small></div>
+    <div class="tool"><span class="emoji">📋</span><strong>Copy and save</strong><small>Take your prompt to your preferred AI platform.</small></div>
+  </div>
+</section>
+
+<footer>
+  <strong>AI Professional Prompt Architect</strong>
+  <p>Built to help turn creative ideas into structured prompts.</p>
+  <small>Prompt output may need editing and testing for your chosen AI tool.</small>
+</footer>
 
 <script>
-function buildPrompt(){
-  const goal=document.getElementById('goal').value.trim();
-  const platform=document.getElementById('platform').value;
-  const audience=document.getElementById('audience').value.trim()||'The intended target audience';
-  const language=document.getElementById('language').value;
-  const duration=document.getElementById('duration').value;
-  const style=document.getElementById('style').value;
-  const details=document.getElementById('details').value.trim();
+const form=document.getElementById("promptForm");
+const platform=document.getElementById("platform");
+const goal=document.getElementById("goal");
+const output=document.getElementById("output");
+const resultArea=document.getElementById("resultArea");
+const status=document.getElementById("status");
 
-  if(!goal){
-    document.getElementById('status').textContent='Please enter your topic or main goal first.';
-    document.getElementById('goal').focus();
-    return;
-  }
+document.querySelectorAll("[data-tool]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    platform.value=button.dataset.tool;
+    document.getElementById("generator").scrollIntoView({behavior:"smooth"});
+    goal.focus();
+  });
+});
 
-  let prompt=`ROLE:
-Act as an expert ${platform} content strategist, creative director and professional prompt engineer.
+form.addEventListener("submit",event=>{
+  event.preventDefault();
+  const project=platform.value;
+  const topic=goal.value.trim();
+  if(!topic){goal.focus();return;}
+  const audience=document.getElementById("audience").value.trim()||"the intended target audience";
+  const language=document.getElementById("language").value;
+  const duration=document.getElementById("duration").value;
+  const style=document.getElementById("style").value;
+  const details=document.getElementById("details").value.trim()||"Use your best judgment while staying faithful to the topic.";
+  let task="Create a complete, polished deliverable";
+  if(project.includes("Video")||project.includes("Reels")||project.includes("Shorts")) task="Create a compelling video concept and production-ready script";
+  if(project==="Image Generation") task="Create a detailed image-generation prompt";
+  if(project==="Blog Article") task="Create a well-structured, useful article";
+  if(project==="Product Advertisement") task="Create a persuasive but truthful product advertisement";
+  if(project==="Business Marketing") task="Create a practical marketing campaign";
+  if(project==="Fitness Content") task="Create clear, responsible fitness content";
 
-PROJECT:
-Create content about: ${goal}
+  const prompt=`ROLE
+Act as an experienced ${project} creative director and prompt engineer.
 
-PLATFORM:
-${platform}
+OBJECTIVE
+${task} about: ${topic}
 
-TARGET AUDIENCE:
+TARGET AUDIENCE
 ${audience}
 
-LANGUAGE:
-Write all spoken dialogue, narration and on-screen text in ${language}, using natural and correct language.
+OUTPUT SETTINGS
+- Language: ${language}
+- Duration or length: ${duration}
+- Style: ${style}
 
-DURATION / LENGTH:
-${duration}
+QUALITY REQUIREMENTS
+- Begin with a strong, relevant opening that captures attention.
+- Keep every detail relevant to the main topic and audience.
+- Use clear, specific, actionable instructions.
+- Organize the output into logical sections or scenes where appropriate.
+- For video projects, specify visuals, actions, camera direction, audio and timing. Keep characters and locations consistent across scenes.
+- For image projects, specify subject, composition, lighting, environment, perspective and visual quality.
+- Avoid vague filler, unnecessary repetition, unsupported claims and accidental changes of subject.
+- Make the result polished and ready to review before publishing.
 
-CREATIVE STYLE:
-${style}
+ADDITIONAL INSTRUCTIONS
+${details}
 
-OBJECTIVE:
-Create original, engaging, high-quality content with a strong opening hook, clear progression and a satisfying ending. Make every scene, visual, line of dialogue and sound relevant to the topic.
+FINAL OUTPUT
+Provide the finished deliverable in ${language}. Follow the requested length, check consistency and clarity, and clearly label any assumptions. Do not claim to have created an actual image or video when only text is being provided.`;
 
-EXECUTION REQUIREMENTS:
-1. Start with a compelling hook appropriate to the selected platform.
-2. Organize the content into a logical sequence with clear timings when applicable.
-3. Provide specific, actionable creative instructions rather than vague descriptions.
-4. Describe camera framing, movement, lighting, environment and visual details when relevant.
-5. Keep characters, clothing, locations, props and visual style consistent across scenes.
-6. If multiple characters speak, identify each speaker and specify who says each line. Match dialogue and lip movement to the correct speaker.
-7. Include suitable sound effects, background music and narration guidance where relevant.
-8. For short-form video, optimize pacing for the selected duration and use a strong ending.
-9. For image generation, describe the subject, composition, lighting, environment and aspect ratio.
-10. For blogs or marketing content, provide a suitable structure, useful information and a clear call to action.
-11. Avoid filler, contradictory instructions, unwanted text, visual glitches and unnecessary scene changes.
-12. Do not invent facts or make unsupported claims.
+  output.textContent=prompt;
+  resultArea.hidden=false;
+  status.textContent="Prompt generated successfully. Review it, then copy or download it.";
+  resultArea.scrollIntoView({behavior:"smooth",block:"start"});
+});
 
-DELIVERABLE:
-Provide a polished, ready-to-use result tailored to the project and platform. Include any scene-by-scene prompts, dialogue, captions or production directions needed for this content type.
-
-`;
-
-  if(details){
-    prompt+=`ADDITIONAL USER INSTRUCTIONS:\n${details}\n\n`;
-  }
-
-  prompt+=`FINAL QUALITY CHECK:
-Before finalizing, verify relevance to the topic, language accuracy, timing, clarity, consistency and suitability for ${platform}.`;
-
-  document.getElementById('output').value=prompt;
-  document.getElementById('status').textContent='Professional prompt generated successfully.';
-}
-
-async function copyPrompt(){
-  const output=document.getElementById('output');
-  const status=document.getElementById('status');
-  if(!output.value.trim()){
-    status.textContent='Generate a prompt first.';
-    return;
-  }
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+  const text=output.textContent;
   try{
-    await navigator.clipboard.writeText(output.value);
-    status.textContent='Prompt copied successfully.';
-  }catch(e){
-    output.focus();
-    output.select();
-    try{
-      const success=document.execCommand('copy');
-      status.textContent=success?'Prompt copied successfully.':'Select the prompt and choose Copy.';
-    }catch(err){
-      status.textContent='Select the prompt and choose Copy.';
-    }
+    await navigator.clipboard.writeText(text);
+    status.textContent="Prompt copied to clipboard.";
+  }catch(error){
+    const range=document.createRange();
+    range.selectNodeContents(output);
+    const selection=window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    status.textContent="Prompt selected. Long-press and choose Copy.";
   }
-}
+});
 
-function downloadPrompt(){
-  const value=document.getElementById('output').value;
-  const status=document.getElementById('status');
-  if(!value.trim()){
-    status.textContent='Generate a prompt first.';
-    return;
-  }
-  const blob=new Blob([value],{type:'text/plain;charset=utf-8'});
+document.getElementById("downloadBtn").addEventListener("click",()=>{
+  const blob=new Blob([output.textContent],{type:"text/plain;charset=utf-8"});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='professional-prompt.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  const link=document.createElement("a");
+  link.href=url;
+  link.download="professional-ai-prompt.txt";
+  link.click();
   URL.revokeObjectURL(url);
-  status.textContent='Download requested.';
-}
+});
 
-function clearForm(){
-  ['goal','audience','details','output'].forEach(id=>{
-    document.getElementById(id).value='';
-  });
-  document.getElementById('platform').selectedIndex=0;
-  document.getElementById('language').selectedIndex=0;
-  document.getElementById('duration').selectedIndex=0;
-  document.getElementById('style').selectedIndex=0;
-  document.getElementById('status').textContent='Ready for a new prompt.';
-}
+form.addEventListener("reset",()=>{
+  resultArea.hidden=true;
+  status.textContent="Form reset.";
+});
 </script>
 </body>
 </html>
