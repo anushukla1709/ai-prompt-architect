@@ -1,253 +1,404 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101426">
-<meta name="description" content="Create professional AI prompts for videos, images, social media, blogs and business.">
+<meta name="description" content="Create master prompts and consistent clip-by-clip prompts for Google Flow AI videos.">
 <title>AI Professional Prompt Architect</title>
 <style>
-:root{--bg:#0b1020;--panel:#151d32;--text:#f5f7ff;--muted:#aab5ce;--accent:#8b5cf6;--border:#303b55}
+:root{--bg:#0b1020;--panel:#151d32;--text:#f5f7ff;--muted:#aab5ce;--accent:#8050f5;--border:#303b55}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}
-button,input,select,textarea{font:inherit}
-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 5%;border-bottom:1px solid var(--border);background:#101629;position:sticky;top:0;z-index:5}
-.logo{font-weight:800;font-size:18px}
-.logo span{color:#a78bfa}
-.navlink{color:#d7dcef;font-size:14px}
-.hero{text-align:center;padding:65px 18px 55px;background:radial-gradient(ellipse at top,#38256f 0%,#171b3b 48%,#0b1020 100%)}
-.tag{display:inline-block;padding:6px 13px;border:1px solid #6e55a8;border-radius:30px;color:#ddd0ff;font-size:12px}
-h1{font-size:clamp(32px,7vw,54px);line-height:1.12;margin:20px auto;max-width:800px}
-.hero p{color:#c4cbe0;max-width:620px;margin:0 auto 25px}
-.btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;background:linear-gradient(120deg,#7c3aed,#4f46e5);color:white;font-weight:700;cursor:pointer}
+nav{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 5%;background:#101629;border-bottom:1px solid var(--border)}
+.logo{font-weight:800;font-size:18px}.logo span{color:#b9a2ff}
+nav a{color:var(--text);text-decoration:none}
+.hero{text-align:center;padding:55px 18px;background:radial-gradient(ellipse at top,#38256f,#171b3b 55%,#0b1020)}
+.tag{display:inline-block;border:1px solid #7860ad;border-radius:30px;padding:5px 12px;font-size:12px;color:#e2d8ff}
+h1{font-size:clamp(32px,7vw,52px);line-height:1.15;margin:18px auto;max-width:800px}
+h1 span{color:#b9a2ff}.hero p{max-width:650px;margin:0 auto 24px;color:#c4cbe0}
+.btn{display:inline-block;border:0;border-radius:10px;padding:12px 17px;background:linear-gradient(120deg,#7c3aed,#4f46e5);color:white;font-weight:bold;cursor:pointer;text-decoration:none}
 .btn.secondary{background:#26314b;border:1px solid #43506e}
-.section{max-width:1000px;margin:auto;padding:45px 18px}
-.section-title{text-align:center;margin-bottom:25px}
-.section-title h2{font-size:28px;margin-bottom:5px}
-.section-title p,.muted{color:var(--muted)}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
-.tool{background:var(--panel);border:1px solid var(--border);padding:19px 14px;border-radius:15px;cursor:pointer;text-align:left;color:var(--text)}
-.tool:hover{border-color:#9b82ff;transform:translateY(-2px)}
-.tool .emoji{font-size:27px}
-.tool strong{display:block;margin:7px 0}
-.tool small{color:var(--muted)}
-.panel{background:var(--panel);border:1px solid var(--border);padding:22px;border-radius:18px}
-label{display:block;font-weight:700;margin:15px 0 7px}
-input,select,textarea{width:100%;padding:13px;border:1px solid #45516e;border-radius:10px;background:#0e1528;color:white}
-textarea{min-height:95px;resize:vertical}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-#output{min-height:210px;margin-top:18px;white-space:pre-wrap;overflow-wrap:anywhere}
-.notice{color:#f3d7a2;font-size:13px;margin-top:12px}
-footer{text-align:center;padding:28px 15px;color:var(--muted);border-top:1px solid var(--border)}
-@media(max-width:480px){nav{padding:13px 15px}.hero{padding-top:48px}.section{padding:32px 14px}.panel{padding:16px}.navlink{font-size:12px}}
+.section{max-width:1000px;margin:auto;padding:38px 16px}
+.section-title{text-align:center;margin-bottom:22px}
+.section-title h2{font-size:27px;margin-bottom:5px}
+.muted,small{color:var(--muted)}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.tool{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);text-align:left;cursor:pointer}
+.tool strong{display:block;margin:7px 0}.emoji{font-size:26px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:20px;margin-bottom:16px}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #45516e;border-radius:10px;background:#0e1528;color:white;font:inherit}
+textarea{min-height:90px;resize:vertical}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#0e1528;border:1px solid var(--border);border-radius:12px;padding:15px;margin:12px 0}
+.result-title{font-size:19px;margin-top:25px}
+.clip-card{border:1px solid var(--border);border-radius:14px;padding:15px;margin:14px 0;background:#11192c}
+.clip-card h3{margin-top:0}
+.notice{font-size:13px;color:#f3d7a2}
+footer{text-align:center;border-top:1px solid var(--border);padding:25px;color:var(--muted)}
+[hidden]{display:none!important}
+@media(max-width:480px){nav{padding:12px}.section{padding:28px 13px}.panel{padding:15px}}
 </style>
 </head>
 <body>
 <nav>
-  <a class="logo" href="#home">AI <span>Prompt Architect</span></a>
-  <a class="navlink" href="#tools">Explore Tools ↓</a>
+<a class="logo" href="#home">AI <span>Prompt Architect</span></a>
+<a href="#generator">Create Prompts ↓</a>
 </nav>
 
 <header class="hero" id="home">
-  <span class="tag">YOUR CREATIVE AI WORKSPACE</span>
-  <h1>Turn Your Ideas Into <span style="color:#b9a2ff">Powerful AI Prompts</span></h1>
-  <p>Create detailed prompts for viral videos, cinematic scenes, images, blogs and business content—all in one place.</p>
-  <a class="btn" href="#generator">Create Your Prompt →</a>
+<span class="tag">MASTER PROMPT + CLIP PROMPTS</span>
+<h1>Create Consistent <span>AI Videos</span></h1>
+<p>Build a master production prompt and separate, copy-ready scene prompts for Google Flow and other AI video tools.</p>
+<a class="btn" href="#generator">Start Creating →</a>
 </header>
 
 <section class="section" id="tools">
-  <div class="section-title">
-    <h2>Explore AI Tools</h2>
-    <p>Choose your project to start building a professional prompt.</p>
-  </div>
-  <div class="tools">
-    <button class="tool" data-tool="YouTube Shorts" type="button"><span class="emoji">🎬</span><strong>YouTube Shorts</strong><small>Hooks, scripts and scenes</small></button>
-    <button class="tool" data-tool="Facebook Reels" type="button"><span class="emoji">📱</span><strong>Facebook Reels</strong><small>Short-form video ideas</small></button>
-    <button class="tool" data-tool="Cinematic AI Video" type="button"><span class="emoji">🎥</span><strong>Cinematic Video</strong><small>Film-style scene prompts</small></button>
-    <button class="tool" data-tool="Image Generation" type="button"><span class="emoji">🖼️</span><strong>Image Prompts</strong><small>Detailed visual concepts</small></button>
-    <button class="tool" data-tool="Blog Article" type="button"><span class="emoji">✍️</span><strong>Blog Writer</strong><small>SEO-focused article prompts</small></button>
-    <button class="tool" data-tool="Product Advertisement" type="button"><span class="emoji">🛍️</span><strong>Product Ads</strong><small>Creative marketing ideas</small></button>
-    <button class="tool" data-tool="Fitness Content" type="button"><span class="emoji">💪</span><strong>Fitness Content</strong><small>Workout and wellness content</small></button>
-    <button class="tool" data-tool="Business Marketing" type="button"><span class="emoji">🚀</span><strong>Business Marketing</strong><small>Campaigns and growth ideas</small></button>
-  </div>
+<div class="section-title">
+<h2>Choose Your Project</h2>
+<p class="muted">Select a category to prefill your video project.</p>
+</div>
+<div class="tools">
+<button class="tool" data-project="Cinematic AI Video" type="button"><span class="emoji">🎬</span><strong>Cinematic Video</strong><small>Movie-style scenes</small></button>
+<button class="tool" data-project="Disaster Movie" type="button"><span class="emoji">🌊</span><strong>Disaster Movie</strong><small>Fictional disaster scenes</small></button>
+<button class="tool" data-project="YouTube Shorts" type="button"><span class="emoji">📱</span><strong>YouTube Shorts</strong><small>Short-form stories</small></button>
+<button class="tool" data-project="Facebook Reels" type="button"><span class="emoji">🎞️</span><strong>Facebook Reels</strong><small>Vertical video concepts</small></button>
+<button class="tool" data-project="Product Advertisement" type="button"><span class="emoji">🛍️</span><strong>Product Ad</strong><small>Commercial videos</small></button>
+<button class="tool" data-project="Custom Project" type="button"><span class="emoji">✨</span><strong>Custom Project</strong><small>Your own concept</small></button>
+</div>
 </section>
 
 <section class="section" id="generator">
-  <div class="section-title">
-    <h2>Build Your Professional Prompt</h2>
-    <p>Describe your idea. Customize the settings. Generate your prompt.</p>
-  </div>
-  <div class="panel">
-    <form id="promptForm">
-      <label for="platform">1. Platform / Project</label>
-      <select id="platform">
-        <option>YouTube Shorts</option><option>Facebook Reels</option>
-        <option>Instagram Reels</option><option>Cinematic AI Video</option>
-        <option>Fitness Content</option><option>Product Advertisement</option>
-        <option>Blog Article</option><option>Image Generation</option>
-        <option>Business Marketing</option><option>Custom Project</option>
-      </select>
-      <label for="goal">2. Topic or Main Goal *</label>
-      <textarea id="goal" required placeholder="Example: A giant tsunami hits a modern coastal city"></textarea>
-      <div class="grid">
-        <div>
-          <label for="audience">3. Target Audience</label>
-          <input id="audience" placeholder="Example: US and UK viewers">
-        </div>
-        <div>
-          <label for="language">4. Output Language</label>
-          <select id="language"><option>English</option><option>Hindi</option><option>Hinglish</option><option>Spanish</option><option>French</option><option>Japanese</option></select>
-        </div>
-        <div>
-          <label for="duration">5. Duration / Length</label>
-          <select id="duration"><option>10 seconds</option><option>15 seconds</option><option>20 seconds</option><option>30 seconds</option><option>60 seconds</option><option>3–5 minutes</option><option>Long-form content</option><option>Not applicable</option></select>
-        </div>
-        <div>
-          <label for="style">6. Style / Quality</label>
-          <select id="style"><option>Professional and engaging</option><option>Hollywood cinematic realism</option><option>Funny and entertaining</option><option>Emotional storytelling</option><option>Documentary style</option><option>Educational and clear</option><option>Luxury commercial</option><option>Photorealistic</option></select>
-        </div>
-      </div>
-      <label for="details">7. Extra Instructions (Optional)</label>
-      <textarea id="details" placeholder="Character consistency, scene matching, camera movement, hook, sound design, call to action..."></textarea>
-      <div class="actions">
-        <button class="btn" type="submit">✨ Generate Professional Prompt</button>
-        <button class="btn secondary" type="reset">Reset Form</button>
-      </div>
-    </form>
-    <div id="resultArea" hidden>
-      <h3>Your Generated Prompt</h3>
-      <div class="panel" id="output" aria-live="polite"></div>
-      <div class="actions">
-        <button class="btn" type="button" id="copyBtn">Copy Prompt</button>
-        <button class="btn secondary" type="button" id="downloadBtn">Download TXT</button>
-      </div>
-      <p class="notice">This free tool creates text prompts. Generating actual AI images or videos requires a separate compatible service.</p>
-    </div>
-    <p class="muted" id="status" aria-live="polite"></p>
-  </div>
-</section>
+<div class="section-title">
+<h2>Video Prompt Architect</h2>
+<p class="muted">Generate one master prompt plus individual clip prompts.</p>
+</div>
+<div class="panel">
+<form id="promptForm">
+<label for="platform">1. Platform / Project</label>
+<select id="platform">
+<option>Cinematic AI Video</option>
+<option>Disaster Movie</option>
+<option>YouTube Shorts</option>
+<option>Facebook Reels</option>
+<option>Instagram Reels</option>
+<option>Product Advertisement</option>
+<option>Fitness Content</option>
+<option>Custom Project</option>
+</select>
 
-<section class="section">
-  <div class="section-title">
-    <h2>Simple. Creative. Powerful.</h2>
-    <p>Organize your ideas and turn them into clear instructions for your preferred AI tool.</p>
-  </div>
-  <div class="tools">
-    <div class="tool"><span class="emoji">⚡</span><strong>Fast workflow</strong><small>Start with a topic and customize your result.</small></div>
-    <div class="tool"><span class="emoji">🎯</span><strong>Clear instructions</strong><small>Specify audience, style, language and length.</small></div>
-    <div class="tool"><span class="emoji">📋</span><strong>Copy and save</strong><small>Take your prompt to your preferred AI platform.</small></div>
-  </div>
+<label for="goal">2. Video Topic *</label>
+<textarea id="goal" required placeholder="Example: A giant tsunami approaches a modern coastal city"></textarea>
+
+<div class="grid">
+<div>
+<label for="audience">3. Target Audience</label>
+<input id="audience" value="US and UK viewers">
+</div>
+<div>
+<label for="language">4. Language</label>
+<select id="language"><option>English</option><option>Hindi</option><option>Hinglish</option><option>Spanish</option></select>
+</div>
+<div>
+<label for="duration">5. Total Video Duration</label>
+<select id="duration">
+<option value="10">10 seconds</option>
+<option value="20" selected>20 seconds</option>
+<option value="30">30 seconds</option>
+<option value="40">40 seconds</option>
+<option value="60">60 seconds</option>
+</select>
+</div>
+<div>
+<label for="clipLength">6. Duration Per Clip</label>
+<select id="clipLength">
+<option value="8">8 seconds</option>
+<option value="10" selected>10 seconds</option>
+</select>
+</div>
+<div>
+<label for="style">7. Visual Style</label>
+<select id="style">
+<option>Photorealistic Hollywood cinematic</option>
+<option>Realistic documentary</option>
+<option>Stylized 3D animation</option>
+<option>Comedy and entertainment</option>
+<option>Luxury commercial</option>
+</select>
+</div>
+<div>
+<label for="aspect">8. Aspect Ratio</label>
+<select id="aspect"><option>Vertical 9:16</option><option>Horizontal 16:9</option><option>Square 1:1</option></select>
+</div>
+</div>
+
+<label for="characters">9. Character / Location Details (Optional)</label>
+<textarea id="characters" placeholder="Example: Same coastal city, same family in blue and yellow jackets, sunset lighting"></textarea>
+
+<label for="details">10. Extra Instructions (Optional)</label>
+<textarea id="details" placeholder="Hook, suspense, dialogue, camera style, music, ending, captions..."></textarea>
+
+<div class="actions">
+<button class="btn" type="submit">✨ Generate Master + Clip Prompts</button>
+<button class="btn secondary" type="reset">Reset</button>
+</div>
+</form>
+<p id="status" class="muted" aria-live="polite"></p>
+</div>
+
+<div id="results" hidden>
+<div class="panel">
+<h2>1. Master Prompt</h2>
+<p class="muted">Use this as the overall visual and continuity guide. Include it with each clip prompt if your video tool needs repeated context.</p>
+<div class="result" id="masterOutput"></div>
+<div class="actions">
+<button class="btn copy" type="button" data-copy="masterOutput">Copy Master Prompt</button>
+</div>
+</div>
+
+<div class="panel">
+<h2>2. Separate Clip Prompts</h2>
+<p class="muted">Generate each clip separately. Use the same reference images or previous-frame guidance when supported by your video tool.</p>
+<div id="clipsOutput"></div>
+</div>
+
+<div class="panel">
+<h2>3. Complete Prompt Pack</h2>
+<p class="muted">Save the master prompt and all clip prompts together.</p>
+<button class="btn" type="button" id="downloadAll">Download All Prompts (.txt)</button>
+<p class="notice">These are text prompts, not generated videos. AI video tools may still vary in their interpretation. Check the output before publishing.</p>
+</div>
+</div>
 </section>
 
 <footer>
-  <strong>AI Professional Prompt Architect</strong>
-  <p>Built to help turn creative ideas into structured prompts.</p>
-  <small>Prompt output may need editing and testing for your chosen AI tool.</small>
+<strong>AI Professional Prompt Architect</strong>
+<p>Designed to help organize video ideas into production-ready prompts.</p>
 </footer>
 
 <script>
-const form=document.getElementById("promptForm");
-const platform=document.getElementById("platform");
-const goal=document.getElementById("goal");
-const output=document.getElementById("output");
-const resultArea=document.getElementById("resultArea");
-const status=document.getElementById("status");
+const $=id=>document.getElementById(id);
+let completePack="";
 
-document.querySelectorAll("[data-tool]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    platform.value=button.dataset.tool;
-    document.getElementById("generator").scrollIntoView({behavior:"smooth"});
-    goal.focus();
-  });
+document.querySelectorAll("[data-project]").forEach(button=>{
+button.addEventListener("click",()=>{
+$("platform").value=button.dataset.project;
+$("generator").scrollIntoView({behavior:"smooth"});
+$("goal").focus();
+});
 });
 
-form.addEventListener("submit",event=>{
-  event.preventDefault();
-  const project=platform.value;
-  const topic=goal.value.trim();
-  if(!topic){goal.focus();return;}
-  const audience=document.getElementById("audience").value.trim()||"the intended target audience";
-  const language=document.getElementById("language").value;
-  const duration=document.getElementById("duration").value;
-  const style=document.getElementById("style").value;
-  const details=document.getElementById("details").value.trim()||"Use your best judgment while staying faithful to the topic.";
-  let task="Create a complete, polished deliverable";
-  if(project.includes("Video")||project.includes("Reels")||project.includes("Shorts")) task="Create a compelling video concept and production-ready script";
-  if(project==="Image Generation") task="Create a detailed image-generation prompt";
-  if(project==="Blog Article") task="Create a well-structured, useful article";
-  if(project==="Product Advertisement") task="Create a persuasive but truthful product advertisement";
-  if(project==="Business Marketing") task="Create a practical marketing campaign";
-  if(project==="Fitness Content") task="Create clear, responsible fitness content";
+function buildMaster(data){
+return `MASTER PRODUCTION PROMPT
+PROJECT: ${data.project}
+TOPIC: ${data.topic}
+AUDIENCE: ${data.audience}
+LANGUAGE: ${data.language}
+TOTAL DURATION: ${data.total}s
+FORMAT: ${data.aspect}
+VISUAL STYLE: ${data.style}
 
-  const prompt=`ROLE
-Act as an experienced ${project} creative director and prompt engineer.
+CORE CREATIVE DIRECTION
+Create a coherent, cinematic video about "${data.topic}". Start with a visually striking hook, escalate the action clearly, and finish with a memorable payoff or cliffhanger. Keep every shot relevant to the same story.
 
-OBJECTIVE
-${task} about: ${topic}
+LOCKED CONTINUITY BIBLE
+- Location: ${data.location}
+- Characters: ${data.characters || "Use only characters needed by the story. Keep their appearance, clothing, age and screen position consistent."}
+- Lighting and time of day: establish one consistent look and maintain it unless a transition is explicitly specified.
+- Geography and motion: preserve the layout of the location, screen direction, movement direction and spatial relationships between shots.
+- Props and damage: preserve object placement and any damage already established. Do not reset the scene between clips.
+- Visual identity: ${data.style}; consistent color grading, scale, textures and atmosphere.
+- Keep the same identities and designs. Do not introduce duplicate characters, random new locations, unexplained vehicles or unrelated objects.
 
-TARGET AUDIENCE
-${audience}
+CAMERA AND MOTION
+Use deliberate camera movement: wide establishing shots, controlled tracking, push-ins or close-ups only when motivated by the action. Maintain screen direction. Motion must have a clear beginning, progression and end. Avoid sudden teleportation, impossible physics, jitter, morphing or unmotivated camera changes.
 
-OUTPUT SETTINGS
-- Language: ${language}
-- Duration or length: ${duration}
-- Style: ${style}
+AUDIO
+Design a coherent soundscape: environmental ambience, action-specific sound effects and music that rises with the story. Keep ambience consistent between clips. Do not add dialogue unless requested or clearly useful. If dialogue is included, specify the speaker and exact line.
 
-QUALITY REQUIREMENTS
-- Begin with a strong, relevant opening that captures attention.
-- Keep every detail relevant to the main topic and audience.
-- Use clear, specific, actionable instructions.
-- Organize the output into logical sections or scenes where appropriate.
-- For video projects, specify visuals, actions, camera direction, audio and timing. Keep characters and locations consistent across scenes.
-- For image projects, specify subject, composition, lighting, environment, perspective and visual quality.
-- Avoid vague filler, unnecessary repetition, unsupported claims and accidental changes of subject.
-- Make the result polished and ready to review before publishing.
+HOOK, PACING AND ENDING
+- Make the first second visually compelling.
+- Escalate the stakes through the middle.
+- Deliver a clear payoff or cliffhanger at the end.
+- Keep the pacing appropriate to the requested total duration.
+- Use readable, correctly spelled captions only if requested. Avoid garbled AI-generated text.
 
-ADDITIONAL INSTRUCTIONS
-${details}
+NEGATIVE CONSTRAINTS
+No unexplained changes in faces, clothing, buildings, weather, time of day, wave or object direction. No duplicated people, distorted anatomy, floating debris without cause, inconsistent scale, sudden scene resets, accidental subtitles, logos or watermarks. Use realistic motion and coherent physical cause and effect.
 
-FINAL OUTPUT
-Provide the finished deliverable in ${language}. Follow the requested length, check consistency and clarity, and clearly label any assumptions. Do not claim to have created an actual image or video when only text is being provided.`;
+USER INSTRUCTIONS
+${data.details || "Use creative judgment while preserving the topic, continuity, cinematic clarity and logical action."}
 
-  output.textContent=prompt;
-  resultArea.hidden=false;
-  status.textContent="Prompt generated successfully. Review it, then copy or download it.";
-  resultArea.scrollIntoView({behavior:"smooth",block:"start"});
+OUTPUT REQUIREMENT
+Create ${data.total} seconds in ${data.aspect} format, divided into ${data.count} clips of up to ${data.clipLength} seconds each. Provide each clip as a separate generation prompt with exact timing, visible action, camera direction, sound and a clear end state. Include a transition or continuity handoff for every clip. Do not claim to have generated an actual video.`;
+}
+
+function scenePlan(topic, count, total){
+const plans=[];
+for(let i=0;i<count;i++){
+const start=i*10;
+const end=Math.min(total,(i+1)*10);
+let phase;
+if(count===1) phase="Hook, focused action and a clear payoff";
+else if(i===0) phase="Immediate hook and story setup";
+else if(i===count-1) phase="Climax, payoff or cliffhanger";
+else phase="Escalation and rising tension";
+plans.push({start,end,phase});
+}
+return plans;
+}
+
+function buildClip(data, index, start, end, phase, previous){
+const seconds=end-start;
+return `CLIP ${index+1} OF ${data.count} — ${start}-${end} SECONDS
+PROJECT: ${data.topic}
+CLIP DURATION: ${seconds} seconds
+PHASE: ${phase}
+
+PROMPT FOR VIDEO GENERATION
+Create clip ${index+1} of a continuous ${data.total}-second ${data.aspect} ${data.style} video about "${data.topic}".
+
+CONTINUITY CONTEXT
+${data.location}
+Characters and appearance: ${data.characters || "Keep character appearance consistent with the master prompt and any supplied reference image."}
+${previous ? "Start by continuing the previous clip's final state: " + previous : "Establish the location and action clearly, with the main subject easy to identify."}
+Follow the Master Prompt's continuity bible exactly. Reuse reference images or the last frame of the preceding clip when the tool supports them.
+
+ACTION AND TIMING
+${seconds<=3 ? "Show one clear action with a readable beginning and end." : `0-${Math.min(2,seconds)}s: Establish the immediate action and visual hook.
+${Math.min(2,seconds)}-${Math.max(2,seconds-2)}s: Develop the main action with clear motion and rising tension.
+${Math.max(2,seconds-2)}-${seconds}s: Complete this clip's action and create a clear handoff to the next clip.`}
+
+CAMERA
+Specify a motivated shot and movement that supports the action. Preserve screen direction, scale and spatial geography. Avoid random cuts or unnecessary camera shake.
+
+ENVIRONMENT AND PHYSICS
+Keep lighting, weather, background, object scale and movement direction consistent. Show cause and effect clearly. Water, smoke, vehicles, people and debris must move believably for the scene.
+
+SOUND
+Use location-matched ambience, action-specific sound effects and music that supports this phase. Avoid an abrupt audio reset; carry ambience naturally across clip boundaries. Dialogue: ${data.language}; include only if useful and clearly assigned to a speaker.
+
+ENDING / HANDOFF
+End with a stable, clearly defined visual state that can connect to the next clip. ${index===data.count-1 ? "Deliver the final payoff or cliffhanger, then end decisively." : "Do not resolve the entire story yet; preserve forward motion for the next clip."}
+
+AVOID
+Character or location changes, inconsistent lighting, reversed movement, duplicate people, warped objects, random vehicles, unrelated actions, garbled text, logos and watermarks.
+
+USER-SPECIFIC NOTES
+${data.details || "Keep the scene focused, cinematic, coherent and easy to understand."}
+
+Generate only this ${seconds}-second clip. Do not add extra scenes outside its duration.`;
+}
+
+$("promptForm").addEventListener("submit",event=>{
+event.preventDefault();
+const topic=$("goal").value.trim();
+if(!topic){$("goal").focus();return;}
+
+const total=Number($("duration").value);
+const clipLength=Number($("clipLength").value);
+const count=Math.ceil(total/clipLength);
+const data={
+project:$("platform").value,
+topic,
+audience:$("audience").value.trim()||"General audience",
+language:$("language").value,
+total,
+clipLength,
+count,
+style:$("style").value,
+aspect:$("aspect").value,
+characters:$("characters").value.trim(),
+details:$("details").value.trim(),
+location:$("characters").value.trim()||"Use one clearly established location and preserve its layout across every clip."
+};
+
+const master=buildMaster(data);
+$("masterOutput").textContent=master;
+$("clipsOutput").replaceChildren();
+const clips=[];
+let previous="";
+
+for(let i=0;i<count;i++){
+const start=i*clipLength;
+const end=Math.min(total,(i+1)*clipLength);
+let phase;
+if(count===1)phase="Hook, focused action and payoff";
+else if(i===0)phase="Immediate hook and story setup";
+else if(i===count-1)phase="Climax, payoff or cliffhanger";
+else phase="Escalation and rising tension";
+
+const prompt=buildClip(data,i,start,end,phase,previous);
+clips.push(prompt);
+
+const card=document.createElement("div");
+card.className="clip-card";
+const heading=document.createElement("h3");
+heading.textContent=`Clip ${i+1} — ${start}–${end} seconds`;
+const desc=document.createElement("p");
+desc.className="muted";
+desc.textContent=`${phase} · ${end-start} seconds`;
+const content=document.createElement("div");
+content.className="result";
+content.textContent=prompt;
+const copy=document.createElement("button");
+copy.type="button";
+copy.className="btn";
+copy.textContent=`Copy Clip ${i+1} Prompt`;
+copy.addEventListener("click",()=>copyText(prompt,copy));
+card.append(heading,desc,content,copy);
+$("clipsOutput").append(card);
+
+previous=`End this clip with a clear visual state at ${end} seconds. Continue the same characters, location, lighting, movement direction and action in the next clip.`;
+}
+
+completePack=master+"\n\n\n"+clips.join("\n\n"+"=".repeat(48)+"\n\n");
+$("results").hidden=false;
+$("status").textContent=`Created 1 master prompt and ${count} separate clip prompt(s). Review the output before using it in Flow.`;
+$("results").scrollIntoView({behavior:"smooth",block:"start"});
 });
 
-document.getElementById("copyBtn").addEventListener("click",async()=>{
-  const text=output.textContent;
-  try{
-    await navigator.clipboard.writeText(text);
-    status.textContent="Prompt copied to clipboard.";
-  }catch(error){
-    const range=document.createRange();
-    range.selectNodeContents(output);
-    const selection=window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    status.textContent="Prompt selected. Long-press and choose Copy.";
-  }
+async function copyText(text,button){
+try{
+await navigator.clipboard.writeText(text);
+button.textContent="Copied!";
+}catch(error){
+const area=document.createElement("textarea");
+area.value=text;
+document.body.append(area);
+area.select();
+const ok=document.execCommand("copy");
+area.remove();
+button.textContent=ok?"Copied!":"Select and copy manually";
+}
+setTimeout(()=>{button.textContent=button.dataset.original||"Copy Prompt";},1800);
+}
+
+document.querySelectorAll("[data-copy]").forEach(button=>{
+button.dataset.original=button.textContent;
+button.addEventListener("click",()=>copyText($(button.dataset.copy).textContent,button));
 });
 
-document.getElementById("downloadBtn").addEventListener("click",()=>{
-  const blob=new Blob([output.textContent],{type:"text/plain;charset=utf-8"});
-  const url=URL.createObjectURL(blob);
-  const link=document.createElement("a");
-  link.href=url;
-  link.download="professional-ai-prompt.txt";
-  link.click();
-  URL.revokeObjectURL(url);
+$("downloadAll").addEventListener("click",()=>{
+const blob=new Blob([completePack],{type:"text/plain;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const link=document.createElement("a");
+link.href=url;
+link.download="google-flow-master-and-clip-prompts.txt";
+document.body.append(link);
+link.click();
+link.remove();
+URL.revokeObjectURL(url);
 });
 
-form.addEventListener("reset",()=>{
-  resultArea.hidden=true;
-  status.textContent="Form reset.";
+$("promptForm").addEventListener("reset",()=>{
+$("results").hidden=true;
+$("status").textContent="Form reset.";
+completePack="";
 });
 </script>
 </body>
