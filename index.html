@@ -1,405 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101426">
-<meta name="description" content="Create master prompts and consistent clip-by-clip prompts for Google Flow AI videos.">
-<title>AI Professional Prompt Architect</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020">
+<title>AI Professional Prompt Architect — Google Flow Edition</title>
 <style>
-:root{--bg:#0b1020;--panel:#151d32;--text:#f5f7ff;--muted:#aab5ce;--accent:#8050f5;--border:#303b55}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
-nav{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 5%;background:#101629;border-bottom:1px solid var(--border)}
-.logo{font-weight:800;font-size:18px}.logo span{color:#b9a2ff}
-nav a{color:var(--text);text-decoration:none}
-.hero{text-align:center;padding:55px 18px;background:radial-gradient(ellipse at top,#38256f,#171b3b 55%,#0b1020)}
-.tag{display:inline-block;border:1px solid #7860ad;border-radius:30px;padding:5px 12px;font-size:12px;color:#e2d8ff}
-h1{font-size:clamp(32px,7vw,52px);line-height:1.15;margin:18px auto;max-width:800px}
-h1 span{color:#b9a2ff}.hero p{max-width:650px;margin:0 auto 24px;color:#c4cbe0}
-.btn{display:inline-block;border:0;border-radius:10px;padding:12px 17px;background:linear-gradient(120deg,#7c3aed,#4f46e5);color:white;font-weight:bold;cursor:pointer;text-decoration:none}
-.btn.secondary{background:#26314b;border:1px solid #43506e}
-.section{max-width:1000px;margin:auto;padding:38px 16px}
-.section-title{text-align:center;margin-bottom:22px}
-.section-title h2{font-size:27px;margin-bottom:5px}
-.muted,small{color:var(--muted)}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.tool{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);text-align:left;cursor:pointer}
-.tool strong{display:block;margin:7px 0}.emoji{font-size:26px}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:20px;margin-bottom:16px}
-label{display:block;font-weight:bold;margin:14px 0 6px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #45516e;border-radius:10px;background:#0e1528;color:white;font:inherit}
-textarea{min-height:90px;resize:vertical}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
-.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
-.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#0e1528;border:1px solid var(--border);border-radius:12px;padding:15px;margin:12px 0}
-.result-title{font-size:19px;margin-top:25px}
-.clip-card{border:1px solid var(--border);border-radius:14px;padding:15px;margin:14px 0;background:#11192c}
-.clip-card h3{margin-top:0}
-.notice{font-size:13px;color:#f3d7a2}
-footer{text-align:center;border-top:1px solid var(--border);padding:25px;color:var(--muted)}
-[hidden]{display:none!important}
-@media(max-width:480px){nav{padding:12px}.section{padding:28px 13px}.panel{padding:15px}}
-</style>
-</head>
+:root{--bg:#0b1020;--panel:#151d33;--panel2:#0f172a;--text:#f4f6ff;--muted:#aeb8d1;--accent:#8b5cf6;--border:#303b58;--gold:#f5d58b}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Arial,sans-serif}a{color:inherit;text-decoration:none}.nav{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:13px 5%;background:#10172bea;border-bottom:1px solid var(--border)}.logo{font-weight:850}.logo span,.gradient{color:#b59aff}.hero{text-align:center;padding:55px 18px 42px;background:radial-gradient(ellipse at top,#352366,#151a36 48%,var(--bg) 80%)}.pill{display:inline-block;border:1px solid #7557ae;border-radius:30px;padding:7px 15px;color:#d9caff;font-size:.82rem}.hero h1{font-size:clamp(2rem,7vw,3.4rem);line-height:1.12;margin:20px auto;max-width:850px}.hero p{max-width:760px;margin:0 auto 24px;color:var(--muted);font-size:1.08rem}.btn{border:0;border-radius:12px;padding:12px 17px;background:linear-gradient(120deg,var(--accent),#4f46e5);color:white;font-weight:800;font-size:1rem;cursor:pointer}.btn.secondary{background:#26324d;border:1px solid #465271}.btn.small{font-size:.9rem;padding:10px 14px}.wrap{width:min(100% - 28px,1000px);margin:auto}.section{padding:35px 0}.section-head{text-align:center;margin-bottom:22px}.section-head h2{font-size:clamp(1.65rem,5vw,2.3rem);margin:0 0 8px}.section-head p,.muted{color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:clamp(16px,4vw,28px);margin-bottom:20px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field{margin-bottom:18px}.field label{display:block;font-weight:750;margin-bottom:8px}.field small{display:block;color:var(--muted);margin-top:5px}.field input,.field select,.field textarea{width:100%;background:var(--panel2);border:1px solid #45516f;border-radius:12px;color:white;padding:13px;font:inherit;min-height:48px}.field textarea{min-height:95px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#8994af}.full{grid-column:1/-1}.actions{display:flex;gap:10px;flex-wrap:wrap}.notice{color:var(--gold);font-size:.92rem;margin-top:14px}.results{display:none}.result-card{background:var(--panel2);border:1px solid var(--border);border-radius:17px;padding:16px;margin:16px 0}.result-card h3{margin:0 0 6px}.result-card pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.95rem;line-height:1.7;margin:14px 0;color:#eef1ff}.meta{color:var(--muted);font-size:.9rem}.mini-title{color:#c7b3ff;font-size:.8rem;letter-spacing:.08em;font-weight:800}.footer{text-align:center;border-top:1px solid var(--border);padding:28px 14px;color:var(--muted)}.status{min-height:25px;color:#b8f7d0;margin-top:10px}@media(max-width:620px){.grid{grid-template-columns:1fr}.hero{padding-top:42px}.nav{padding:12px 16px}.panel{border-radius:18px}.actions .btn{width:100%}}
+</style></head>
 <body>
-<nav>
-<a class="logo" href="#home">AI <span>Prompt Architect</span></a>
-<a href="#generator">Create Prompts ↓</a>
-</nav>
-
-<header class="hero" id="home">
-<span class="tag">MASTER PROMPT + CLIP PROMPTS</span>
-<h1>Create Consistent <span>AI Videos</span></h1>
-<p>Build a master production prompt and separate, copy-ready scene prompts for Google Flow and other AI video tools.</p>
-<a class="btn" href="#generator">Start Creating →</a>
-</header>
-
-<section class="section" id="tools">
-<div class="section-title">
-<h2>Choose Your Project</h2>
-<p class="muted">Select a category to prefill your video project.</p>
-</div>
-<div class="tools">
-<button class="tool" data-project="Cinematic AI Video" type="button"><span class="emoji">🎬</span><strong>Cinematic Video</strong><small>Movie-style scenes</small></button>
-<button class="tool" data-project="Disaster Movie" type="button"><span class="emoji">🌊</span><strong>Disaster Movie</strong><small>Fictional disaster scenes</small></button>
-<button class="tool" data-project="YouTube Shorts" type="button"><span class="emoji">📱</span><strong>YouTube Shorts</strong><small>Short-form stories</small></button>
-<button class="tool" data-project="Facebook Reels" type="button"><span class="emoji">🎞️</span><strong>Facebook Reels</strong><small>Vertical video concepts</small></button>
-<button class="tool" data-project="Product Advertisement" type="button"><span class="emoji">🛍️</span><strong>Product Ad</strong><small>Commercial videos</small></button>
-<button class="tool" data-project="Custom Project" type="button"><span class="emoji">✨</span><strong>Custom Project</strong><small>Your own concept</small></button>
-</div>
-</section>
-
-<section class="section" id="generator">
-<div class="section-title">
-<h2>Video Prompt Architect</h2>
-<p class="muted">Generate one master prompt plus individual clip prompts.</p>
-</div>
-<div class="panel">
-<form id="promptForm">
-<label for="platform">1. Platform / Project</label>
-<select id="platform">
-<option>Cinematic AI Video</option>
-<option>Disaster Movie</option>
-<option>YouTube Shorts</option>
-<option>Facebook Reels</option>
-<option>Instagram Reels</option>
-<option>Product Advertisement</option>
-<option>Fitness Content</option>
-<option>Custom Project</option>
-</select>
-
-<label for="goal">2. Video Topic *</label>
-<textarea id="goal" required placeholder="Example: A giant tsunami approaches a modern coastal city"></textarea>
-
-<div class="grid">
-<div>
-<label for="audience">3. Target Audience</label>
-<input id="audience" value="US and UK viewers">
-</div>
-<div>
-<label for="language">4. Language</label>
-<select id="language"><option>English</option><option>Hindi</option><option>Hinglish</option><option>Spanish</option></select>
-</div>
-<div>
-<label for="duration">5. Total Video Duration</label>
-<select id="duration">
-<option value="10">10 seconds</option>
-<option value="20" selected>20 seconds</option>
-<option value="30">30 seconds</option>
-<option value="40">40 seconds</option>
-<option value="60">60 seconds</option>
-</select>
-</div>
-<div>
-<label for="clipLength">6. Duration Per Clip</label>
-<select id="clipLength">
-<option value="8">8 seconds</option>
-<option value="10" selected>10 seconds</option>
-</select>
-</div>
-<div>
-<label for="style">7. Visual Style</label>
-<select id="style">
-<option>Photorealistic Hollywood cinematic</option>
-<option>Realistic documentary</option>
-<option>Stylized 3D animation</option>
-<option>Comedy and entertainment</option>
-<option>Luxury commercial</option>
-</select>
-</div>
-<div>
-<label for="aspect">8. Aspect Ratio</label>
-<select id="aspect"><option>Vertical 9:16</option><option>Horizontal 16:9</option><option>Square 1:1</option></select>
-</div>
-</div>
-
-<label for="characters">9. Character / Location Details (Optional)</label>
-<textarea id="characters" placeholder="Example: Same coastal city, same family in blue and yellow jackets, sunset lighting"></textarea>
-
-<label for="details">10. Extra Instructions (Optional)</label>
-<textarea id="details" placeholder="Hook, suspense, dialogue, camera style, music, ending, captions..."></textarea>
-
-<div class="actions">
-<button class="btn" type="submit">✨ Generate Master + Clip Prompts</button>
-<button class="btn secondary" type="reset">Reset</button>
-</div>
-</form>
-<p id="status" class="muted" aria-live="polite"></p>
-</div>
-
-<div id="results" hidden>
-<div class="panel">
-<h2>1. Master Prompt</h2>
-<p class="muted">Use this as the overall visual and continuity guide. Include it with each clip prompt if your video tool needs repeated context.</p>
-<div class="result" id="masterOutput"></div>
-<div class="actions">
-<button class="btn copy" type="button" data-copy="masterOutput">Copy Master Prompt</button>
-</div>
-</div>
-
-<div class="panel">
-<h2>2. Separate Clip Prompts</h2>
-<p class="muted">Generate each clip separately. Use the same reference images or previous-frame guidance when supported by your video tool.</p>
-<div id="clipsOutput"></div>
-</div>
-
-<div class="panel">
-<h2>3. Complete Prompt Pack</h2>
-<p class="muted">Save the master prompt and all clip prompts together.</p>
-<button class="btn" type="button" id="downloadAll">Download All Prompts (.txt)</button>
-<p class="notice">These are text prompts, not generated videos. AI video tools may still vary in their interpretation. Check the output before publishing.</p>
-</div>
-</div>
-</section>
-
-<footer>
-<strong>AI Professional Prompt Architect</strong>
-<p>Designed to help organize video ideas into production-ready prompts.</p>
-</footer>
-
+<nav class="nav"><a class="logo" href="#top">AI <span>Prompt Architect</span></a><a href="#builder">Create Prompts ↓</a></nav>
+<header class="hero" id="top"><span class="pill">MASTER PROMPT + SEPARATE CLIP PROMPTS</span><h1>Create More Consistent <span class="gradient">AI Videos</span></h1><p>Build a production brief and separate, copy-ready scene prompts for Google Flow. Define action, timing, camera, sound and continuity before generating.</p><a class="btn" href="#builder" style="display:inline-block">Start Creating →</a></header>
+<main class="wrap"><section class="section" id="builder"><div class="section-head"><h2>Video Prompt Architect</h2><p>Fill in your idea. Generate prompts—not videos.</p></div>
+<form id="promptForm" class="panel"><div class="grid">
+<div class="field"><label for="project">1. Project type</label><select id="project"><option>Disaster Movie</option><option>Cinematic Video</option><option>YouTube Shorts</option><option>Facebook Reels</option><option>Product Advertisement</option><option>Comedy Scene</option><option>Fantasy / Monster</option><option>Custom Project</option></select></div>
+<div class="field"><label for="audience">2. Target audience</label><input id="audience" value="US and UK viewers" placeholder="e.g. US and UK viewers"></div>
+<div class="field full"><label for="topic">3. Video topic *</label><textarea id="topic" required placeholder="e.g. A giant tsunami hits a modern coastal city"></textarea></div>
+<div class="field"><label for="language">4. Language</label><select id="language"><option>English</option><option>Hindi</option><option>English dialogue with no narration</option><option>No dialogue</option></select></div>
+<div class="field"><label for="total">5. Total video duration</label><select id="total"><option value="20">20 seconds</option><option value="30">30 seconds</option><option value="40">40 seconds</option><option value="60">60 seconds</option><option value="80">80 seconds</option><option value="120">120 seconds</option></select></div>
+<div class="field"><label for="clip">6. Duration per clip</label><select id="clip"><option value="8">8 seconds</option><option value="10" selected>10 seconds</option><option value="15">15 seconds</option></select><small>The final clip may be shorter.</small></div>
+<div class="field"><label for="style">7. Visual style</label><select id="style"><option>Photorealistic Hollywood cinematic</option><option>Stylized 3D animation</option><option>Documentary realism</option><option>Anime cinematic</option><option>Commercial product film</option></select></div>
+<div class="field"><label for="ratio">8. Aspect ratio</label><select id="ratio"><option>Vertical 9:16</option><option>Landscape 16:9</option><option>Square 1:1</option></select></div>
+<div class="field full"><label for="continuity">9. Character / location continuity details</label><textarea id="continuity" placeholder="e.g. Same coastal city, glass skyscrapers, cloudy afternoon; same family in blue and yellow jackets if shown."></textarea></div>
+<div class="field full"><label for="instructions">10. Extra instructions</label><textarea id="instructions" placeholder="e.g. Suspenseful hook, no narration, realistic water physics, no text or logos, end on a cliffhanger."></textarea></div>
+</div><div class="actions"><button class="btn" type="submit">✨ Generate Master + Clip Prompts</button><button class="btn secondary" type="reset">Reset Form</button></div><div class="status" id="status" role="status"></div></form></section>
+<section id="results" class="section results"><div class="section-head"><h2>Your Prompt Pack</h2><p>Copy each prompt into Google Flow separately. If supported, use the previous clip's final frame as the next clip's reference.</p></div>
+<div class="panel"><div class="mini-title">1 · MASTER PRODUCTION PROMPT</div><div class="result-card"><pre id="masterText"></pre><button class="btn small" id="copyMaster" type="button">Copy Master Prompt</button></div><div class="notice">The master prompt is a continuity guide. Each clip prompt is standalone because video tools may not remember previous prompts automatically.</div></div>
+<div class="panel"><div class="mini-title">2 · SEPARATE CLIP PROMPTS</div><div id="clipResults"></div></div>
+<div class="panel"><div class="mini-title">3 · COMPLETE PROMPT PACK</div><p class="muted">Save the master prompt and every clip prompt in one text file.</p><button class="btn" type="button" id="downloadAll">Download All Prompts (.txt)</button><p class="notice">These are text prompts, not generated videos. AI tools may interpret instructions differently. Review every clip before publishing.</p></div></section></main>
+<footer class="footer"><strong>AI Professional Prompt Architect</strong><p>Plan the action. Lock continuity. Generate and review one clip at a time.</p></footer>
 <script>
-const $=id=>document.getElementById(id);
-let completePack="";
-
-document.querySelectorAll("[data-project]").forEach(button=>{
-button.addEventListener("click",()=>{
-$("platform").value=button.dataset.project;
-$("generator").scrollIntoView({behavior:"smooth"});
-$("goal").focus();
-});
-});
-
-function buildMaster(data){
-return `MASTER PRODUCTION PROMPT
-PROJECT: ${data.project}
-TOPIC: ${data.topic}
-AUDIENCE: ${data.audience}
-LANGUAGE: ${data.language}
-TOTAL DURATION: ${data.total}s
-FORMAT: ${data.aspect}
-VISUAL STYLE: ${data.style}
-
-CORE CREATIVE DIRECTION
-Create a coherent, cinematic video about "${data.topic}". Start with a visually striking hook, escalate the action clearly, and finish with a memorable payoff or cliffhanger. Keep every shot relevant to the same story.
-
-LOCKED CONTINUITY BIBLE
-- Location: ${data.location}
-- Characters: ${data.characters || "Use only characters needed by the story. Keep their appearance, clothing, age and screen position consistent."}
-- Lighting and time of day: establish one consistent look and maintain it unless a transition is explicitly specified.
-- Geography and motion: preserve the layout of the location, screen direction, movement direction and spatial relationships between shots.
-- Props and damage: preserve object placement and any damage already established. Do not reset the scene between clips.
-- Visual identity: ${data.style}; consistent color grading, scale, textures and atmosphere.
-- Keep the same identities and designs. Do not introduce duplicate characters, random new locations, unexplained vehicles or unrelated objects.
-
-CAMERA AND MOTION
-Use deliberate camera movement: wide establishing shots, controlled tracking, push-ins or close-ups only when motivated by the action. Maintain screen direction. Motion must have a clear beginning, progression and end. Avoid sudden teleportation, impossible physics, jitter, morphing or unmotivated camera changes.
-
-AUDIO
-Design a coherent soundscape: environmental ambience, action-specific sound effects and music that rises with the story. Keep ambience consistent between clips. Do not add dialogue unless requested or clearly useful. If dialogue is included, specify the speaker and exact line.
-
-HOOK, PACING AND ENDING
-- Make the first second visually compelling.
-- Escalate the stakes through the middle.
-- Deliver a clear payoff or cliffhanger at the end.
-- Keep the pacing appropriate to the requested total duration.
-- Use readable, correctly spelled captions only if requested. Avoid garbled AI-generated text.
-
-NEGATIVE CONSTRAINTS
-No unexplained changes in faces, clothing, buildings, weather, time of day, wave or object direction. No duplicated people, distorted anatomy, floating debris without cause, inconsistent scale, sudden scene resets, accidental subtitles, logos or watermarks. Use realistic motion and coherent physical cause and effect.
-
-USER INSTRUCTIONS
-${data.details || "Use creative judgment while preserving the topic, continuity, cinematic clarity and logical action."}
-
-OUTPUT REQUIREMENT
-Create ${data.total} seconds in ${data.aspect} format, divided into ${data.count} clips of up to ${data.clipLength} seconds each. Provide each clip as a separate generation prompt with exact timing, visible action, camera direction, sound and a clear end state. Include a transition or continuity handoff for every clip. Do not claim to have generated an actual video.`;
-}
-
-function scenePlan(topic, count, total){
-const plans=[];
-for(let i=0;i<count;i++){
-const start=i*10;
-const end=Math.min(total,(i+1)*10);
-let phase;
-if(count===1) phase="Hook, focused action and a clear payoff";
-else if(i===0) phase="Immediate hook and story setup";
-else if(i===count-1) phase="Climax, payoff or cliffhanger";
-else phase="Escalation and rising tension";
-plans.push({start,end,phase});
-}
-return plans;
-}
-
-function buildClip(data, index, start, end, phase, previous){
-const seconds=end-start;
-return `CLIP ${index+1} OF ${data.count} — ${start}-${end} SECONDS
-PROJECT: ${data.topic}
-CLIP DURATION: ${seconds} seconds
-PHASE: ${phase}
-
-PROMPT FOR VIDEO GENERATION
-Create clip ${index+1} of a continuous ${data.total}-second ${data.aspect} ${data.style} video about "${data.topic}".
-
-CONTINUITY CONTEXT
-${data.location}
-Characters and appearance: ${data.characters || "Keep character appearance consistent with the master prompt and any supplied reference image."}
-${previous ? "Start by continuing the previous clip's final state: " + previous : "Establish the location and action clearly, with the main subject easy to identify."}
-Follow the Master Prompt's continuity bible exactly. Reuse reference images or the last frame of the preceding clip when the tool supports them.
-
-ACTION AND TIMING
-${seconds<=3 ? "Show one clear action with a readable beginning and end." : `0-${Math.min(2,seconds)}s: Establish the immediate action and visual hook.
-${Math.min(2,seconds)}-${Math.max(2,seconds-2)}s: Develop the main action with clear motion and rising tension.
-${Math.max(2,seconds-2)}-${seconds}s: Complete this clip's action and create a clear handoff to the next clip.`}
-
-CAMERA
-Specify a motivated shot and movement that supports the action. Preserve screen direction, scale and spatial geography. Avoid random cuts or unnecessary camera shake.
-
-ENVIRONMENT AND PHYSICS
-Keep lighting, weather, background, object scale and movement direction consistent. Show cause and effect clearly. Water, smoke, vehicles, people and debris must move believably for the scene.
-
-SOUND
-Use location-matched ambience, action-specific sound effects and music that supports this phase. Avoid an abrupt audio reset; carry ambience naturally across clip boundaries. Dialogue: ${data.language}; include only if useful and clearly assigned to a speaker.
-
-ENDING / HANDOFF
-End with a stable, clearly defined visual state that can connect to the next clip. ${index===data.count-1 ? "Deliver the final payoff or cliffhanger, then end decisively." : "Do not resolve the entire story yet; preserve forward motion for the next clip."}
-
-AVOID
-Character or location changes, inconsistent lighting, reversed movement, duplicate people, warped objects, random vehicles, unrelated actions, garbled text, logos and watermarks.
-
-USER-SPECIFIC NOTES
-${data.details || "Keep the scene focused, cinematic, coherent and easy to understand."}
-
-Generate only this ${seconds}-second clip. Do not add extra scenes outside its duration.`;
-}
-
-$("promptForm").addEventListener("submit",event=>{
-event.preventDefault();
-const topic=$("goal").value.trim();
-if(!topic){$("goal").focus();return;}
-
-const total=Number($("duration").value);
-const clipLength=Number($("clipLength").value);
-const count=Math.ceil(total/clipLength);
-const data={
-project:$("platform").value,
-topic,
-audience:$("audience").value.trim()||"General audience",
-language:$("language").value,
-total,
-clipLength,
-count,
-style:$("style").value,
-aspect:$("aspect").value,
-characters:$("characters").value.trim(),
-details:$("details").value.trim(),
-location:$("characters").value.trim()||"Use one clearly established location and preserve its layout across every clip."
-};
-
-const master=buildMaster(data);
-$("masterOutput").textContent=master;
-$("clipsOutput").replaceChildren();
-const clips=[];
-let previous="";
-
-for(let i=0;i<count;i++){
-const start=i*clipLength;
-const end=Math.min(total,(i+1)*clipLength);
-let phase;
-if(count===1)phase="Hook, focused action and payoff";
-else if(i===0)phase="Immediate hook and story setup";
-else if(i===count-1)phase="Climax, payoff or cliffhanger";
-else phase="Escalation and rising tension";
-
-const prompt=buildClip(data,i,start,end,phase,previous);
-clips.push(prompt);
-
-const card=document.createElement("div");
-card.className="clip-card";
-const heading=document.createElement("h3");
-heading.textContent=`Clip ${i+1} — ${start}–${end} seconds`;
-const desc=document.createElement("p");
-desc.className="muted";
-desc.textContent=`${phase} · ${end-start} seconds`;
-const content=document.createElement("div");
-content.className="result";
-content.textContent=prompt;
-const copy=document.createElement("button");
-copy.type="button";
-copy.className="btn";
-copy.textContent=`Copy Clip ${i+1} Prompt`;
-copy.addEventListener("click",()=>copyText(prompt,copy));
-card.append(heading,desc,content,copy);
-$("clipsOutput").append(card);
-
-previous=`End this clip with a clear visual state at ${end} seconds. Continue the same characters, location, lighting, movement direction and action in the next clip.`;
-}
-
-completePack=master+"\n\n\n"+clips.join("\n\n"+"=".repeat(48)+"\n\n");
-$("results").hidden=false;
-$("status").textContent=`Created 1 master prompt and ${count} separate clip prompt(s). Review the output before using it in Flow.`;
-$("results").scrollIntoView({behavior:"smooth",block:"start"});
-});
-
-async function copyText(text,button){
-try{
-await navigator.clipboard.writeText(text);
-button.textContent="Copied!";
-}catch(error){
-const area=document.createElement("textarea");
-area.value=text;
-document.body.append(area);
-area.select();
-const ok=document.execCommand("copy");
-area.remove();
-button.textContent=ok?"Copied!":"Select and copy manually";
-}
-setTimeout(()=>{button.textContent=button.dataset.original||"Copy Prompt";},1800);
-}
-
-document.querySelectorAll("[data-copy]").forEach(button=>{
-button.dataset.original=button.textContent;
-button.addEventListener("click",()=>copyText($(button.dataset.copy).textContent,button));
-});
-
-$("downloadAll").addEventListener("click",()=>{
-const blob=new Blob([completePack],{type:"text/plain;charset=utf-8"});
-const url=URL.createObjectURL(blob);
-const link=document.createElement("a");
-link.href=url;
-link.download="google-flow-master-and-clip-prompts.txt";
-document.body.append(link);
-link.click();
-link.remove();
-URL.revokeObjectURL(url);
-});
-
-$("promptForm").addEventListener("reset",()=>{
-$("results").hidden=true;
-$("status").textContent="Form reset.";
-completePack="";
-});
-</script>
-</body>
-</html>
+(()=>{const $=id=>document.getElementById(id);let pack=[];
+function action(topic,i,n,d){let t=topic.toLowerCase(),last=i===n-1,first=i===0;
+if(/tsunami|flood|tidal wave/.test(t)){if(first)return `ACTION TIMELINE (${d}s): 0–2s: The sea suddenly draws back from the seawall, exposing wet sand and stranded boats; people on the promenade stop and stare. 2–5s: Reveal a towering dark-blue tsunami beyond the harbour, visibly higher than nearby buildings; birds scatter and spray blows inland. 5–${d}s: The wave advances toward the same skyline. End with the wave still approaching, not already past the city.`;if(last)return `ACTION TIMELINE (${d}s): 0–2s: Continue from the previous clip's final frame: same towering wave, skyline and ocean-to-city direction. 2–5s: Water surges over the seawall and spreads across the coastal road; parked cars begin to shift with the current. 5–${d}s: The surge fills the foreground as the camera retreats to a higher viewpoint; water continues moving naturally at the end.`;return `ACTION TIMELINE (${d}s): 0–2s: Continue the same wave and skyline from the preceding final frame. 2–5s: The wave reaches the harbour mouth; spray bursts against the seawall and the first surge spills into lower streets. 5–${d}s: Water advances along the same street in one coherent direction, pushing small debris realistically. End with the surge still advancing.`}
+if(/earthquake|quake/.test(t))return `ACTION TIMELINE (${d}s): 0–2s: Establish the same street as a tremor begins; signs and streetlights sway. 2–5s: Shaking intensifies; dust falls from a facade and parked vehicles rock. 5–${d}s: Show a physically plausible consequence and end on a clear state for the next clip. Keep building geometry stable unless collapse is explicitly shown.`;
+if(/explosion|meteor|asteroid/.test(t))return `ACTION TIMELINE (${d}s): 0–2s: Establish the location and visible warning. 2–5s: The threat grows visibly; camera moves toward it. 5–${d}s: Show a coherent impact or near-impact consequence, with light, dust and debris moving outward from a clear source. End on a readable visual state.`;
+if(/monster|giant creature|kaiju/.test(t))return `ACTION TIMELINE (${d}s): 0–2s: Reveal the creature's scale against buildings or vehicles. 2–5s: The creature performs one clear action directly related to the topic; body weight and surroundings react believably. 5–${d}s: Show the consequence and a deliberate camera response. Keep anatomy, scale and direction stable.`;
+if(/product|advert|commercial|bulb|phone|gadget/.test(t))return `ACTION TIMELINE (${d}s): 0–2s: Show the product in a clean, attention-grabbing composition. 2–5s: Demonstrate one visually understandable feature with a close-up or controlled camera move. 5–${d}s: Finish with a polished hero shot and clear visual payoff. Do not invent product specifications or claims.`;
+if(/comedy|funny|joke|prank/.test(t))return `ACTION TIMELINE (${d}s): 0–2s: Establish the character, situation and visual hook. 2–5s: Build the misunderstanding through one clear action and readable reaction. 5–${d}s: Deliver the punchline with precise timing; show who acts and who reacts. Keep character appearance and speaker identity consistent.`;
+return `ACTION TIMELINE (${d}s): 0–2s: Show a topic-specific visual hook that establishes the subject and location. 2–5s: The main subject performs a clearly visible action directly related to the topic; show cause and effect. 5–${d}s: Escalate that action into a concrete consequence or reveal. End with a clear visual state that can connect to the next clip. Avoid vague directions without physical action.`}
+function camera(topic,i){let t=topic.toLowerCase();if(/tsunami|flood|tidal wave/.test(t))return i===0?"CAMERA: Begin with a high wide view of the coastal skyline, then a controlled push-in toward the ocean and wave; keep both in the same spatial geography.":"CAMERA: Match the preceding final composition when possible; use a controlled tracking or retreating move that preserves the wave direction and skyline positions.";return i===0?"CAMERA: Open on a clear wide establishing shot, then make one motivated push-in or tracking move toward the main action.":"CAMERA: Match the previous clip's final viewpoint and screen direction; use one motivated camera move that follows the continuing action."}
+function master(x,n){return `MASTER PRODUCTION PROMPT — GOOGLE FLOW\n\nPROJECT: ${x.topic}\nTYPE: ${x.project}\nAUDIENCE: ${x.audience||"General audience"}\nLANGUAGE: ${x.lang}\nTOTAL DURATION: ${x.total}s\nCLIP PLAN: ${n} separate clips, up to ${x.clip}s each\nSTYLE: ${x.style}\nASPECT RATIO: ${x.ratio}\n\nCORE INTENT\nCreate a coherent cinematic video faithful to: ${x.topic}. The first second must contain a clear visual hook. Every shot must show specific action, visible consequence and a recognizable subject—not merely a mood.\n\nCONTINUITY BIBLE\nLocation and details: ${x.continuity||"Establish one specific location in Clip 1 and preserve its layout, landmarks, weather and time of day."}\nKeep recurring characters' face, age, body and clothing consistent. Preserve object designs, scale, orientation and positions. Do not introduce new main characters or locations without a story reason.\nEach clip starts from the previous clip's final visual state. Preserve screen direction, movement path and cause-and-effect. If supported, use the preceding clip's final frame as a reference; otherwise repeat continuity details in the prompt.\n\nCAMERA\nUse deliberate, physically possible camera moves. Establish geography before moving closer. Preserve horizon, scale and screen direction. No random cuts, teleporting camera or excessive shake.\n\nPHYSICS AND QUALITY\nUse believable weight, momentum, collisions, water/smoke/debris behaviour and environmental reactions. Avoid duplicated people, distorted anatomy, morphing objects, flickering details, inconsistent shadows, accidental text, logos and watermarks.\n\nSOUND\nMaintain environmental ambience across clips. Add action-specific effects synchronized to visible events. Music supports the emotional arc without overpowering effects. Dialogue: ${x.lang}; include only if useful and identify the speaker and exact line.\n\nPACING\nEscalate action progressively. End each clip on a stable visual state. Earlier clips preserve forward motion; the final clip delivers payoff or a deliberate cliffhanger.\n\nUSER INSTRUCTIONS\n${x.notes||"Keep the video focused, cinematic, coherent and realistic. Avoid unnecessary narration or on-screen text."}\n\nGenerate each separate clip individually; do not generate the whole video in one shot. Do not add events outside each clip's duration. Review before publishing.`}
+function clipPrompt(x,i,n){let s=i*x.clip,e=Math.min(x.total,s+x.clip),d=e-s,last=i===n-1,first=i===0;return `CLIP ${i+1} OF ${n} — ${s}–${e} SECONDS\nPROJECT: ${x.topic}\nDURATION: ${d}s | PHASE: ${first?"Hook and setup":last?"Final escalation and payoff":"Escalation and handoff"}\nSTYLE: ${x.style} | ASPECT: ${x.ratio} | LANGUAGE: ${x.lang}\n\nVIDEO GENERATION PROMPT\nGenerate ONLY this ${d}-second clip as part of a continuous ${x.total}-second video about “${x.topic}”. ${x.style}, ${x.ratio}. Keep the main subject recognizable and action physically coherent.\n\n${first?"START: Establish the location and immediately reveal the main subject.":"CONTINUITY START: Begin from the preceding clip's final frame. Keep the same location, landmark positions, subject appearance, weather, lighting, screen direction and motion. Do not restart the story or jump to a new scene."}\n\n${action(x.topic,i,n,d)}\n\n${camera(x.topic,i)}\n\nENVIRONMENT AND PHYSICS\nPreserve location layout, weather, time of day, colour palette and object scale. Show cause and effect. Every movement has a visible source and believable direction. No unrelated events or subjects.\n\nSOUND DESIGN\nUse location-matched ambience, action-specific sound effects synchronized to visible events, and restrained cinematic music. Maintain ambience across the clip boundary. Dialogue: ${x.lang}; ${/No dialogue/i.test(x.lang)?"no speech or narration.":"If dialogue is useful, specify exact speaker and exact line; match lip-sync for visible speakers."}\n\n${last?"ENDING: Deliver a clear payoff or strong final cliffhanger. Finish on a stable final composition; no extra scenes.":"ENDING / HANDOFF: End on a clear visual state that can continue into the next clip. Preserve forward motion; do not resolve the whole story."}\n\nAVOID\nCharacter or location changes, inconsistent lighting, reversed movement, duplicate people, warped objects, random vehicles, floating debris without cause, impossible physics, unrelated actions, sudden scene resets, garbled text, accidental subtitles, logos and watermarks.\n\nUSER NOTES\n${x.notes||"Keep the scene focused, cinematic, coherent and easy to understand."}\nGenerate only this clip. Do not add scenes outside its duration.`}
+function copy(text,btn){let old=btn.textContent;const done=()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent=old,1500)};if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(done).catch(()=>fallback(text,btn,old));else fallback(text,btn,old)}
+function fallback(text,btn,old){let a=document.createElement("textarea");a.value=text;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");btn.textContent="Copied!";}catch(e){btn.textContent="Select and copy manually";}a.remove();setTimeout(()=>btn.textContent=old,1800)}
+$("promptForm").addEventListener("submit",e=>{e.preventDefault();let x={project:$("project").value,topic:$("topic").value.trim(),audience:$("audience").value.trim(),lang:$("language").value,total:+$("total").value,clip:+$("clip").value,style:$("style").value,ratio:$("ratio").value,continuity:$("continuity").value.trim(),notes:$("instructions").value.trim()};if(!x.topic){$("status").textContent="Please enter a video topic first.";return}let n=Math.ceil(x.total/x.clip);pack=[master(x,n)];$("masterText").textContent=pack[0];let box=$("clipResults");box.innerHTML="";for(let i=0;i<n;i++){let p=clipPrompt(x,i,n);pack.push(p);let s=i*x.clip,e=Math.min(x.total,s+x.clip),card=document.createElement("article");card.className="result-card";let h=document.createElement("h3");h.textContent=`Clip ${i+1} — ${s}–${e} seconds`;let m=document.createElement("div");m.className="meta";m.textContent=`${e-s} seconds · ${i===0?"Hook and setup":i===n-1?"Final payoff":"Continuity handoff"}`;let pre=document.createElement("pre");pre.textContent=p;let b=document.createElement("button");b.className="btn small";b.type="button";b.textContent=`Copy Clip ${i+1} Prompt`;b.addEventListener("click",()=>copy(p,b));card.append(h,m,pre,b);box.appendChild(card)}$("results").style.display="block";$("status").textContent=`Generated 1 master prompt and ${n} separate clip prompts.`;$("results").scrollIntoView({behavior:"smooth"})});
+$("copyMaster").addEventListener("click",()=>copy($("masterText").textContent,$("copyMaster")));
+$("downloadAll").addEventListener("click",()=>{if(!pack.length){$("status").textContent="Generate a prompt pack first.";return}let blob=new Blob([pack.join("\n\n\n"+"=".repeat(55)+"\n\n\n")],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="google-flow-master-and-clip-prompts.txt";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)});
+$("promptForm").addEventListener("reset",()=>setTimeout(()=>{$("results").style.display="none";$("clipResults").innerHTML="";pack=[];$("status").textContent="Form reset."},0));
+})();
+</script></body></html>
