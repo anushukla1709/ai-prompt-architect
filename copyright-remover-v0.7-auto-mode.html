@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Copyright Remover AI — v0.7 Auto Mode</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1120;--panel:#141e30;--line:#2a3850;--text:#eef4ff;--muted:#a8b7cf;--accent:#67e8c2;--blue:#84a9ff;--warn:#ffd27a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0b1120,#111b2d);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:780px;margin:auto;padding:22px 15px 48px}.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:var(--accent);color:#09201b;font-size:25px;font-weight:900}.ver{font-size:12px;color:var(--accent);font-weight:800;letter-spacing:.08em}.title{font-size:clamp(25px,6vw,36px);line-height:1.15;margin:2px 0}.sub{color:var(--muted);margin:6px 0 0}.panel{background:rgba(20,30,48,.96);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 12px 30px #0002}.step{display:flex;gap:11px;align-items:flex-start}.num{flex:0 0 30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#263751;color:var(--accent);font-weight:800}.step h2{font-size:18px;margin:0 0 5px}.muted{color:var(--muted);font-size:14px}.field{display:flex;gap:8px;margin-top:12px}.field input{min-width:0;flex:1}.input,select{width:100%;background:#0d1524;color:var(--text);border:1px solid #3a4b65;border-radius:11px;padding:12px;font:inherit}.btn{border:0;border-radius:11px;padding:12px 15px;font:inherit;font-weight:750;cursor:pointer}.primary{background:var(--accent);color:#06251d}.secondary{background:#293b57;color:var(--text);border:1px solid #3b506f}.btn:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.filebox{display:block;border:1px dashed #526783;border-radius:13px;padding:15px;margin-top:12px;background:#0d1524}.filebox input{width:100%;margin-top:8px}.preview{margin-top:12px}.preview video{width:100%;max-height:350px;background:#03060b;border-radius:12px}.status{padding:12px;border-radius:12px;background:#0d1524;border:1px solid var(--line);margin-top:12px}.status.good{border-color:#287d69}.status.warn{border-color:#94712f}.status.bad{border-color:#a64d55}.checks{display:grid;gap:9px;margin-top:12px}.check{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:14px}.check input{margin-top:5px;accent-color:var(--accent)}.progress{height:8px;background:#28354a;border-radius:99px;overflow:hidden;margin-top:10px}.progress span{display:block;width:0;height:100%;background:var(--accent);transition:width .2s}.small{font-size:12px;color:var(--muted)}.hidden{display:none!important}a{color:var(--blue)}.pill{display:inline-block;padding:3px 8px;border-radius:99px;background:#263751;color:var(--accent);font-size:12px;font-weight:800}.footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
+@media(max-width:520px){main{padding:17px 11px 36px}.panel{padding:14px}.field{flex-direction:column}.field .btn{width:100%}.actions .btn{flex:1}}
+</style>
+</head>
+<body>
+<main>
+  <header class="top"><div class="logo">✓</div><div><div class="ver">AUTO MODE · VERSION 0.7</div><h1 class="title">Copyright Remover AI</h1><p class="sub">कम steps • मोबाइल-friendly • पहले जाँचें, फिर डाउनलोड करें</p></div></header>
+
+  <section class="panel">
+    <div class="step"><div class="num">1</div><div style="flex:1"><h2>वीडियो या लिंक चुनें</h2><p class="muted">अपने अधिकार वाला वीडियो अपलोड करें। YouTube/Facebook लिंक का preview खुल सकता है, लेकिन वहाँ से वीडियो फ़ाइल अपने-आप डाउनलोड नहीं होगी।</p>
+      <label class="filebox">वीडियो फ़ाइल चुनें (MP4 / WebM / MOV)
+        <input id="videoFile" type="file" accept="video/*">
+      </label>
+      <div class="field"><input id="sourceUrl" class="input" type="url" placeholder="YouTube, Facebook या direct media link"><button id="previewBtn" class="btn secondary">Preview</button></div>
+      <div id="linkMessage" class="status muted">लिंक डालकर Preview दबाएँ, या ऊपर अपनी वीडियो फ़ाइल चुनें।</div>
+      <div id="preview" class="preview hidden"></div>
+    </div></div>
+  </section>
+
+  <section class="panel">
+    <div class="step"><div class="num">2</div><div style="flex:1"><h2>सुरक्षित ऑडियो चुनें</h2><p class="muted">कॉपीराइट वाला गाना छिपाने या detection से बचने के बजाय, अपना या licensed/permission वाला ऑडियो इस्तेमाल करें।</p>
+      <label class="filebox">Replacement audio (वैकल्पिक)
+        <input id="audioFile" type="file" accept="audio/*">
+      </label>
+      <label class="check" style="margin-top:12px"><input id="muteOriginal" type="checkbox"><span>Original video की आवाज़ हटाएँ</span></label>
+      <p class="small">Replacement audio लगाने पर original audio म्यूट हो जाएगा।</p>
+    </div></div>
+  </section>
+
+  <section class="panel">
+    <div class="step"><div class="num">3</div><div style="flex:1"><h2>Copyright risk pre-check</h2><p class="muted">यह शुरुआती checklist है, असली fingerprint database scan नहीं। किसी platform claim से बचने की गारंटी नहीं देता।</p>
+      <div class="checks">
+        <label class="check"><input type="checkbox" id="ownRights"><span>मेरे पास वीडियो और इस्तेमाल होने वाले audio के अधिकार/permission हैं।</span></label>
+        <label class="check"><input type="checkbox" id="licensed"><span>या audio/video की license शर्तें इस उपयोग की अनुमति देती हैं।</span></label>
+      </div>
+      <div class="actions"><button id="checkBtn" class="btn secondary">Risk Check</button></div>
+      <div id="riskResult" class="status">अभी जाँच नहीं हुई।</div>
+    </div></div>
+  </section>
+
+  <section class="panel">
+    <div class="step"><div class="num">4</div><div style="flex:1"><h2>Test और Download</h2><p class="muted">फ़ाइल चुनने के बाद Test चलाएँ। Export आपके मोबाइल/browser की memory और इंटरनेट पर निर्भर करेगा।</p>
+      <div class="actions"><button id="testBtn" class="btn primary" disabled>Test / तैयार करें</button><button id="downloadBtn" class="btn secondary" disabled>Download MP4</button></div>
+      <div class="progress"><span id="bar"></span></div><div id="jobStatus" class="status">पहले वीडियो फ़ाइल चुनें।</div>
+      <div id="resultPreview" class="preview hidden"></div>
+      <p class="small">नोट: link field में YouTube/Facebook URL डालना फ़ाइल import करने के बराबर नहीं है। Direct media link केवल तभी import होगा जब source access/CORS अनुमति दे।</p>
+    </div></div>
+  </section>
+  <div class="footer">v0.7 Auto Mode · कोई copyright bypass नहीं · कोई claim-free guarantee नहीं</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let sourceFile=null, outputUrl=null, outputName='copyright-safe-edit.mp4', ffmpeg=null, ffmpegReady=false;
+function msg(el,text,kind=''){el.className='status'+(kind?' '+kind:'');el.textContent=text}
+function setProgress(n){$('bar').style.width=Math.max(0,Math.min(100,n))+'%'}
+function cleanName(s){return (s||'video').replace(/\.[^.]+$/,'').replace(/[^a-z0-9_-]+/gi,'-').slice(0,55)||'video'}
+function resetOutput(){if(outputUrl){URL.revokeObjectURL(outputUrl);outputUrl=null} $('downloadBtn').disabled=true;$('resultPreview').classList.add('hidden');setProgress(0)}
+$('videoFile').addEventListener('change',e=>{
+ sourceFile=e.target.files[0]||null;resetOutput();
+ if(sourceFile){$('testBtn').disabled=false;msg($('jobStatus'),'फ़ाइल चुनी गई: '+sourceFile.name+' ('+(sourceFile.size/1024/1024).toFixed(1)+' MB)। Test चलाएँ।','good');const u=URL.createObjectURL(sourceFile);$('preview').innerHTML='';const v=document.createElement('video');v.src=u;v.controls=true;v.playsInline=true;$('preview').append(v);$('preview').classList.remove('hidden');msg($('linkMessage'),'वीडियो फ़ाइल ready है।','good')}
+ else {$('testBtn').disabled=true;msg($('jobStatus'),'पहले वीडियो फ़ाइल चुनें.')}
+});
+$('previewBtn').addEventListener('click',()=>{
+ const raw=$('sourceUrl').value.trim(); if(!raw){msg($('linkMessage'),'पहले लिंक paste करें।','warn');return}
+ let u;try{u=new URL(raw)}catch{msg($('linkMessage'),'यह सही URL नहीं लग रहा।','bad');return}
+ if(!['http:','https:'].includes(u.protocol)){msg($('linkMessage'),'केवल http/https लिंक इस्तेमाल करें।','bad');return}
+ const host=u.hostname.replace(/^www\./,'');
+ if(host==='youtube.com'||host==='m.youtube.com'||host==='youtu.be'||host==='youtube-nocookie.com'){
+   let id='';if(host==='youtu.be')id=u.pathname.slice(1).split('/')[0];else id=u.searchParams.get('v')||u.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/)?.[1]||'';
+   if(id){$('preview').innerHTML='<iframe title="YouTube preview" width="100%" height="250" style="border:0;border-radius:12px" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'"></iframe>';$('preview').classList.remove('hidden');msg($('linkMessage'),'YouTube preview खुल गया। यह embed editable video file नहीं है—अपनी authorized file अलग से upload करें।','warn')}
+   else msg($('linkMessage'),'YouTube link पहचाना, लेकिन video ID नहीं मिली।','warn');
+ } else if(host==='facebook.com'||host.endsWith('.facebook.com')||host==='fb.watch'){
+   $('preview').innerHTML='';$('preview').classList.add('hidden');msg($('linkMessage'),'Facebook link पहचाना। Preview/download हर link पर उपलब्ध नहीं होता; अपनी original/authorized video file upload करें।','warn');
+ } else {
+   msg($('linkMessage'),'Direct media link पर import की कोशिश की जा रही है…','warn');
+   fetch(u.href,{mode:'cors'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);const ct=r.headers.get('content-type')||'';if(!ct.startsWith('video/')&&!ct.startsWith('audio/')&&!ct.includes('octet-stream'))throw new Error('यह direct video/audio file नहीं लगती');return r.blob()}).then(blob=>{if(!blob.size)throw new Error('खाली फ़ाइल');sourceFile=new File([blob],cleanName(u.pathname.split('/').pop())+'.mp4',{type:blob.type||'video/mp4'});$('videoFile').value='';$('testBtn').disabled=false;resetOutput();const v=document.createElement('video');v.src=URL.createObjectURL(sourceFile);v.controls=true;v.playsInline=true;$('preview').innerHTML='';$('preview').append(v);$('preview').classList.remove('hidden');msg($('linkMessage'),'Direct media import हो गया। अब Risk Check और Test चलाएँ।','good');msg($('jobStatus'),'Direct link से फ़ाइल import हुई।','good')}).catch(()=>msg($('linkMessage'),'Import नहीं हो सका। Source CORS/permission रोक सकता है या यह direct media file नहीं है। अपनी authorized video file upload करें।','warn'));
+ }
+});
+$('checkBtn').addEventListener('click',()=>{
+ const a=$('ownRights').checked,b=$('licensed').checked;
+ if(a||b)msg($('riskResult'),'आपकी दी गई जानकारी के आधार पर शुरुआती check पूरा। License/permission का प्रमाण सुरक्षित रखें। यह platform copyright scan नहीं है और claim-free होने की गारंटी नहीं।','good');
+ else msg($('riskResult'),'High risk / अधिकार स्पष्ट नहीं: केवल वही सामग्री इस्तेमाल करें जिसकी permission या valid license आपके पास हो। Pitch बदलना, speed बदलना या clips जोड़ना अधिकार नहीं देता।','warn');
+});
+$('testBtn').addEventListener('click',async()=>{
+ if(!sourceFile){msg($('jobStatus'),'पहले अपनी authorized video file upload करें।','warn');return}
+ resetOutput();$('testBtn').disabled=true;
+ const audio=$('audioFile').files[0], mute=$('muteOriginal').checked;
+ if(!audio&&!mute){
+   outputUrl=URL.createObjectURL(sourceFile);outputName=cleanName(sourceFile.name)+'.'+((sourceFile.name.split('.').pop()||'mp4').toLowerCase());
+   const v=document.createElement('video');v.src=outputUrl;v.controls=true;v.playsInline=true;$('resultPreview').innerHTML='';$('resultPreview').append(v);$('resultPreview').classList.remove('hidden');$('downloadBtn').disabled=false;setProgress(100);msg($('jobStatus'),'Test preview तैयार है। कोई audio बदलाव नहीं किया गया; Download दबाकर original authorized file सेव करें।','good');$('testBtn').disabled=false;return;
+ }
+ msg($('jobStatus'),'Browser export engine लोड हो रहा है। यह प्रक्रिया मोबाइल पर भारी हो सकती है…','warn');setProgress(10);
+ try{
+  if(!ffmpegReady){
+   const {FFmpeg}=await import('https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
+   const {toBlobURL}=await import('https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js');
+   ffmpeg=new FFmpeg();ffmpeg.on('progress',({progress})=>setProgress(10+Math.round(progress*80)));
+   const base='https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+   await ffmpeg.load({coreURL:await toBlobURL(base+'/ffmpeg-core.js','text/javascript'),wasmURL:await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm')});ffmpegReady=true;
+  }
+  const inExt=(sourceFile.name.split('.').pop()||'mp4').replace(/[^a-z0-9]/gi,'')||'mp4';
+  await ffmpeg.writeFile('input.'+inExt,new Uint8Array(await sourceFile.arrayBuffer()));
+  let args=['-i','input.'+inExt];
+  if(audio){await ffmpeg.writeFile('replacement.audio',new Uint8Array(await audio.arrayBuffer()));args.push('-i','replacement.audio','-map','0:v:0','-map','1:a:0','-c:v','libx264','-preset','ultrafast','-c:a','aac','-shortest','-movflags','+faststart','output.mp4')}
+  else args.push('-an','-c:v','libx264','-preset','ultrafast','-movflags','+faststart','output.mp4');
+  const code=await ffmpeg.exec(args);if(code!==0)throw new Error('Export engine ने error लौटाया');
+  const data=await ffmpeg.readFile('output.mp4');outputUrl=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));outputName=cleanName(sourceFile.name)+'-edited.mp4';
+  const v=document.createElement('video');v.src=outputUrl;v.controls=true;v.playsInline=true;$('resultPreview').innerHTML='';$('resultPreview').append(v);$('resultPreview').classList.remove('hidden');$('downloadBtn').disabled=false;setProgress(100);msg($('jobStatus'),'Test export पूरा। Preview देखें, फिर Download MP4 दबाएँ।','good');
+ }catch(err){console.error(err);msg($('jobStatus'),'Export इस browser/device पर पूरा नहीं हो पाया। छोटी authorized MP4 file try करें या audio बदलाव हटाकर Test करें। Error: '+(err.message||'unknown'),'bad');setProgress(0)}
+ finally{$('testBtn').disabled=false}
+});
+$('downloadBtn').addEventListener('click',()=>{if(!outputUrl)return;const a=document.createElement('a');a.href=outputUrl;a.download=outputName;a.click()});
+</script>
+</body>
+</html>
