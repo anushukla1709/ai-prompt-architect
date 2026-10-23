@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Copyright Remover AI v0.4 — Browser Video Editor</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2b;--line:#28344a;--text:#edf3ff;--muted:#a5b2c8;--accent:#9ad4df;--good:#9ce4bd;--warn:#ffd58a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0b1020,#101b31);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}main{max-width:960px;margin:auto;padding:18px}.brand{display:flex;align-items:center;gap:13px;margin:8px 0 22px}.logo{width:54px;height:54px;border-radius:16px;background:#20364b;display:grid;place-items:center;font-size:27px}.brand h1{font-size:clamp(22px,5vw,32px);margin:0}.muted{color:var(--muted)}.panel{background:rgba(18,26,43,.96);border:1px solid var(--line);border-radius:20px;padding:18px;margin:15px 0}.panel h2{font-size:22px;margin:0 0 14px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;font-weight:650;margin:12px 0 6px}input,select,button{font:inherit}input[type=file],input[type=text],input[type=number],select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#0c1323;color:var(--text)}input[type=range]{width:100%}button{border:0;border-radius:12px;padding:13px 16px;font-weight:750;background:var(--accent);color:#07131c;cursor:pointer}button.secondary{background:#202c42;color:var(--text);border:1px solid var(--line)}button:disabled{opacity:.5;cursor:not-allowed}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}video,audio{width:100%;max-height:460px;margin-top:12px;border-radius:12px;background:#05070c}.status{background:#0b1322;border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:12px;overflow-wrap:anywhere}.status strong{display:block;margin-bottom:5px}.good{color:var(--good)}.warn{color:var(--warn)}.small{font-size:13px;color:var(--muted)}.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.check input{margin-top:6px}.progress{height:8px;border-radius:8px;background:#263249;overflow:hidden;margin-top:12px}.bar{height:100%;width:0;background:var(--accent);transition:width .2s}.hide{display:none}footer{padding:12px 3px 28px;color:var(--muted);font-size:13px}a{color:var(--accent)}@media(max-width:620px){main{padding:12px}.panel{padding:14px}.row{grid-template-columns:1fr}.buttons button{width:100%}}
+</style>
+</head>
+<body><main>
+<header class="brand"><div class="logo">✦</div><div><h1>Copyright Remover AI</h1><div class="muted">v0.4 · Import · Edit · Export · Review</div></div></header>
+<section class="panel">
+<h2>1. वीडियो चुनें</h2>
+<label for="videoFile">अपने डिवाइस से वीडियो चुनें</label>
+<input id="videoFile" type="file" accept="video/*,.mp4,.mov,.webm,.mkv">
+<p class="small">प्रोसेसिंग आपके ब्राउज़र में होती है। बड़ी फाइलों को मोबाइल पर प्रोसेस करने में समय लग सकता है और memory कम पड़ सकती है।</p>
+<div id="sourceStatus" class="status">अभी कोई वीडियो नहीं चुना गया।</div>
+<video id="preview" controls playsinline class="hide"></video>
+</section>
+<section class="panel">
+<h2>2. एडिट सेटिंग्स</h2>
+<div class="row">
+<div><label for="start">Trim शुरू (सेकंड)</label><input id="start" type="number" min="0" step="0.1" value="0"></div>
+<div><label for="end">Trim समाप्त (सेकंड)</label><input id="end" type="number" min="0" step="0.1" placeholder="खाली = अंत तक"></div>
+</div>
+<label class="check"><input id="mute" type="checkbox"> <span>मूल वीडियो का ऑडियो हटाएँ / mute करें</span></label>
+<label for="audioFile">वैकल्पिक: अपना या licensed replacement audio चुनें</label>
+<input id="audioFile" type="file" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg">
+<div id="audioStatus" class="small">Replacement audio वैकल्पिक है। इसे इस्तेमाल करने का अधिकार आपके पास होना चाहिए।</div>
+<div class="buttons"><button id="previewBtn" class="secondary" disabled>Preview चलाएँ</button><button id="exportBtn" disabled>MP4 बनाकर डाउनलोड करें</button></div>
+<div class="progress"><div id="bar" class="bar"></div></div>
+<div id="processStatus" class="status"><strong>स्थिति</strong>वीडियो चुनकर शुरू करें।</div>
+</section>
+<section class="panel">
+<h2>3. Export के बाद समीक्षा</h2>
+<div class="check"><input type="checkbox" id="rights"><span>मेरे पास वीडियो/फुटेज इस्तेमाल करने के अधिकार या अनुमति है।</span></div>
+<div class="check"><input type="checkbox" id="musicRights"><span>मैंने replacement music/voice-over का license या अधिकार जाँचा है।</span></div>
+<div class="check"><input type="checkbox" id="reviewed"><span>मैंने exported वीडियो, आवाज़ और captions स्वयं जाँचे हैं।</span></div>
+<button id="reviewBtn" class="secondary">Review checklist जाँचें</button>
+<div id="riskStatus" class="status"><strong>Copyright status: जाँच बाकी</strong>यह ऐप Content ID या copyright fingerprint database से मिलान नहीं करता।</div>
+</section>
+<footer>
+<strong>ईमानदार सीमा:</strong> यह browser-based editor है, copyright claim remover या official clearance tool नहीं। ऑडियो बदलने, mute करने या trim करने से copyright अधिकार अपने-आप नहीं मिलते। YouTube/Facebook links को सीधे डाउनलोड नहीं किया जाता; केवल ऐसी फाइलें इस्तेमाल करें जिन्हें डाउनलोड और एडिट करने की अनुमति हो। कोई export या risk result copyright-free होने की गारंटी नहीं देता।
+</footer>
+</main>
+<script type="module">
+const $=id=>document.getElementById(id);
+let sourceFile=null, sourceUrl=null, audioFile=null, ffmpeg=null, ffmpegReady=false;
+const say=(id,html)=>$(id).innerHTML=html;
+const setProgress=n=>$("bar").style.width=Math.max(0,Math.min(100,n))+"%";
+$("videoFile").addEventListener("change",()=>{
+ const f=$("videoFile").files?.[0]; if(!f)return;
+ if(sourceUrl)URL.revokeObjectURL(sourceUrl);
+ sourceFile=f;sourceUrl=URL.createObjectURL(f);
+ $("preview").src=sourceUrl;$("preview").classList.remove("hide");
+ $("start").value="0";$("end").value="";
+ say("sourceStatus",`<strong>${escapeHtml(f.name)}</strong>${(f.size/1024/1024).toFixed(1)} MB · ${escapeHtml(f.type||"unknown MIME type")}`);
+ $("exportBtn").disabled=false;$("previewBtn").disabled=false;
+ say("processStatus","<strong>वीडियो तैयार</strong>अब trim/audio विकल्प चुनें और export करें।");
+});
+$("audioFile").addEventListener("change",()=>{audioFile=$("audioFile").files?.[0]||null;$("audioStatus").textContent=audioFile?`चुना गया: ${audioFile.name} (${(audioFile.size/1024/1024).toFixed(1)} MB)`:"Replacement audio वैकल्पिक है।";});
+$("previewBtn").addEventListener("click",async()=>{if(!sourceFile)return;const v=$("preview");const s=Math.max(0,Number($("start").value)||0);try{v.currentTime=s;await v.play()}catch(e){say("processStatus","<strong>Preview नहीं चला</strong>ब्राउज़र में Play दबाकर देखें।")}});
+$("reviewBtn").addEventListener("click",()=>{
+ const ok=$("rights").checked&&$("musicRights").checked&&$("reviewed").checked;
+ say("riskStatus",ok?'<strong class="good">Checklist पूरी — manual review दर्ज</strong>यह copyright clearance नहीं है। किसी platform का claim फिर भी आ सकता है.':'<strong class="warn">Review बाकी</strong>तीनों boxes तभी चुनें जब आपने वास्तव में अधिकार, music license और final export की समीक्षा कर ली हो।');
+});
+$("exportBtn").addEventListener("click",async()=>{
+ if(!sourceFile)return;
+ const start=Math.max(0,Number($("start").value)||0);
+ const duration=Number($("preview").duration);
+ const endRaw=$("end").value.trim();
+ const end=endRaw===""?duration:Number(endRaw);
+ if(!Number.isFinite(duration)||!Number.isFinite(end)||start>=end||end>duration+0.1){say("processStatus","<strong class='warn'>Trim settings सही नहीं हैं</strong>Start/end वीडियो की अवधि के भीतर रखें।");return}
+ if(audioFile && $("mute").checked){say("processStatus","<strong>एक विकल्प चुनें</strong>Replacement audio लगाना है तो mute checkbox हटाएँ।");return}
+ $("exportBtn").disabled=true;setProgress(2);
+ try{
+   say("processStatus","<strong>FFmpeg लोड हो रहा है…</strong>पहली बार इंटरनेट और कुछ समय चाहिए। पेज खुला रखें।");
+   if(!ffmpeg){
+     const {FFmpeg}=await import("https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js");
+     const {toBlobURL}=await import("https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js");
+     ffmpeg=new FFmpeg();
+     ffmpeg.on("progress",({progress})=>setProgress(10+Math.round((progress||0)*85)));
+     ffmpeg.on("log",({message})=>{if(message) say("processStatus",`<strong>Processing…</strong>${escapeHtml(message.slice(-400))}`)});
+     const base="https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
+     await ffmpeg.load({coreURL:await toBlobURL(base+"/ffmpeg-core.js","text/javascript"),wasmURL:await toBlobURL(base+"/ffmpeg-core.wasm","application/wasm")});
+     ffmpegReady=true;
+   }
+   say("processStatus","<strong>वीडियो प्रोसेस हो रहा है…</strong>ब्राउज़र बंद न करें।");
+   const inputExt=safeExt(sourceFile.name,"mp4");
+   const input="input."+inputExt, output="copyright-review.mp4";
+   await ffmpeg.writeFile(input,new Uint8Array(await sourceFile.arrayBuffer()));
+   const args=["-ss",String(start),"-i",input];
+   if(audioFile){
+     const ae=safeExt(audioFile.name,"mp3"), an="replacement."+ae;
+     await ffmpeg.writeFile(an,new Uint8Array(await audioFile.arrayBuffer()));
+     args.push("-ss","0","-i",an,"-t",String(end-start),"-map","0:v:0","-map","1:a:0","-c:v","libx264","-preset","ultrafast","-crf","23","-c:a","aac","-shortest","-movflags","+faststart",output);
+   }else{
+     args.push("-t",String(end-start));
+     if($("mute").checked)args.push("-an");
+     args.push("-c:v","libx264","-preset","ultrafast","-crf","23");
+     if(!$("mute").checked)args.push("-c:a","aac");
+     args.push("-movflags","+faststart",output);
+   }
+   const code=await ffmpeg.exec(args);
+   if(code!==0)throw new Error("FFmpeg export failed (code "+code+")");
+   const data=await ffmpeg.readFile(output);
+   const blob=new Blob([data],{type:"video/mp4"}), url=URL.createObjectURL(blob);
+   const a=document.createElement("a");a.href=url;a.download="copyright-review.mp4";document.body.appendChild(a);a.click();a.remove();
+   setTimeout(()=>URL.revokeObjectURL(url),60000);setProgress(100);
+   say("processStatus",`<strong class="good">Export तैयार — डाउनलोड शुरू हुआ</strong>${(blob.size/1024/1024).toFixed(1)} MB · MP4. डाउनलोड की गई फाइल खोलकर जाँचें। इसके बाद ऊपर checklist पूरी करें।`);
+ }catch(err){
+   console.error(err);say("processStatus",`<strong class="warn">Export नहीं हो पाया</strong>${escapeHtml(err?.message||String(err))}<br>छोटी MP4 फाइल से कोशिश करें। मोबाइल में RAM कम हो या CDN/नेटवर्क उपलब्ध न हो तो laptop पर प्रयास करें।`);
+ }finally{$("exportBtn").disabled=false}
+});
+function safeExt(name,fallback){const m=(name.split(".").pop()||"").toLowerCase().replace(/[^a-z0-9]/g,"");return m&&m.length<=5?m:fallback}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+</script>
+</body></html>
